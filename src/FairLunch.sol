@@ -22,22 +22,26 @@ interface IWETH9 is IERC20 {
 }
 
 // mmmmmmm, delicious.
+// 
+// Pass the blunt to this contract to automatically launch an LP after a fundraise. No governance needed to decide who eats, ever. We believe in a fair lunch. 
 contract FairLunch is IERC721Receiver {
+  // Thrown when some parameter doesn't make sense.
   error YUCK();
+  // Can't serve lunch twice.
   error LUNCH_ALREADY_SERVED();
+  // Only when the blunt has been passed can lunch be served.
   error LUNCH_CANT_BE_SERVED_YET();
 
-  uint256 constant TOTAL_PERCENT = 100;
+  uint256 private constant _TOTAL_PERCENT = 100;
   mapping(uint256 => bool) lunchHasBeenServedFor;
   mapping(uint256 => bool) lunchCanBeServedFor;
   uint256 lpSupplyMultiplier;
-  IJBController3_1 private controller;
-  INonfungiblePositionManager private positionManager;
+  IJBController3_1 controller;
+  INonfungiblePositionManager positionManager;
   string symbol;
   string name;
   IWETH9 weth;
   mapping(uint256 => uint256) lpIdOf;
-  uint256 serverRefund;
 
   // _lpPercent is out of 100. The percent of currently outstanding tokens that should be minted for LPing.
   constructor(
@@ -46,20 +50,20 @@ contract FairLunch is IERC721Receiver {
     string memory _name,
     IJBController3_1 _controller,
     INonfungiblePositionManager _positionManager,
-    IWETH9 _weth,
-    uint256 _serverRefund
+    IWETH9 _weth
   ) {
-    if (_lpSupplyMultiplier == 0) revert YUCK();
+    if (_lpSupplyMultiplier <= 0) revert YUCK();
     lpSupplyMultiplier = _lpSupplyMultiplier;
     symbol = _symbol;
     name = _name;
     controller = _controller;
     positionManager = _positionManager;
     weth = _weth;
-    serverRefund = _serverRefund;
   }
 
   // mmmmm delicious.
+  //
+  // Anyone can send this transaction to serve the lunch once the blunt has been passed. Lunch can only be served once.
   function serveLunch(uint256 _projectId) external {
     // Make sure lunch hasn't yet been served.
     if (lunchHasBeenServedFor[_projectId]) revert LUNCH_ALREADY_SERVED();
@@ -67,15 +71,18 @@ contract FairLunch is IERC721Receiver {
     // Make sure lunch is servable.
     if (!lunchCanBeServedFor[_projectId]) revert LUNCH_CANT_BE_SERVED_YET();
 
-    // Keep a reference to the project's payment terminal.
+    // Keep a reference to the project's payment terminal, where its funds are stored.
     JBPayoutRedemptionPaymentTerminal3_1 _terminal = JBPayoutRedemptionPaymentTerminal3_1(address(controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH)));
+
     // Keep a reference to the project's ETH balance.
     uint256 _projectBalance =  _terminal.store().balanceOf(_terminal, _projectId);
+    
+    ///// 1. Create ERC-20 for the project.
 
-    // 1. Create ERC-20 for the project.
     IERC20 _token = IERC20(address(controller.tokenStore().issueFor(_projectId, name, symbol)));
 
-    // 2. Schedules a funding cycle starting immediately that allows owner minting and distribution of all ETH in the project treasury to this contract.
+    ///// 2. Schedule new funding cycle rules starting immediately that allows owner minting and distribution of all ETH in the project treasury to this contract.
+
     // Set fund access constraints to make all funds distributable.
     JBFundAccessConstraints[] memory _fundAccessConstraints = new JBFundAccessConstraints[](1);
     uint256 _currency = _terminal.currencyForToken(JBTokens.ETH);
@@ -87,7 +94,7 @@ contract FairLunch is IERC721Receiver {
       overflowAllowance: 0,
       overflowAllowanceCurrency: 0
     });
-    // Add a 100% split to this contract.
+    // Add a 100% split routed to this contract.
     JBSplit memory _split =  JBSplit({
       preferClaimed: false,
       preferAddToBalance: false,
@@ -97,7 +104,7 @@ contract FairLunch is IERC721Receiver {
       lockedUntil: 0,
       allocator: IJBSplitAllocator(address(0))
     });
-    // Make a group split for ETH payouts.
+    // Package it up.
     JBSplit[] memory _splits = new JBSplit[](1);
     _splits[0] = _split;
     JBGroupedSplits[] memory _groupedSplits = new JBGroupedSplits[](1);
@@ -109,69 +116,71 @@ contract FairLunch is IERC721Receiver {
         JBFundingCycleData ({
           duration: 0, // doesn't matter since no other reconfigurations are possible.
           weight: 0, // doesn't matter since payments are paused.
-          discountRate: 0, // doesnt matter.
-          ballot: IJBFundingCycleBallot(address(0))
+          discountRate: 0, // doesn't matter since no other reconfigurations are possible.
+          ballot: IJBFundingCycleBallot(address(0)) // doesn't matter since no other reconfigurations are possible.
         }),
         JBFundingCycleMetadata({
          global: JBGlobalFundingCycleMetadata({
-            allowSetTerminals: false,
-            allowSetController: false,
-            pauseTransfers: false
+            allowSetTerminals: false, // no need
+            allowSetController: false, // no need
+            pauseTransfers: false // no need
           }),
-          reservedRate: 0,
-          redemptionRate: JBConstants.MAX_REDEMPTION_RATE,
-          ballotRedemptionRate: JBConstants.MAX_REDEMPTION_RATE,
-          // IMPORTANT. No more payments.
-          pausePay: true,
-          pauseDistributions: false,
-          pauseRedeem: false,
-          pauseBurn: false,
-          // IMPORTANT. We must allow the project's owner (this contract) to be able to mint new tokens on demand.
-          allowMinting: true,
-          allowTerminalMigration: false,
-          allowControllerMigration: false,
-          holdFees: false,
-          preferClaimedTokenOverride: false,
-          useTotalOverflowForRedemptions: false,
-          useDataSourceForPay: false,
-          useDataSourceForRedeem: false,
-          dataSource: address(0),
-          metadata: 0
+          reservedRate: 0, // no need
+          redemptionRate: JBConstants.MAX_REDEMPTION_RATE, // refund whenever.
+          ballotRedemptionRate: JBConstants.MAX_REDEMPTION_RATE, // doesn't matter since no ballot is used. 
+          pausePay: true, // IMPORTANT. No more payments.
+          pauseDistributions: false, // IMPORTANT. Distributions must be enabled.
+          pauseRedeem: false, // IMPORTANT. Redeeming must be enabled.
+          pauseBurn: false,  // IMPORTANT. Burning must be enabled.
+          allowMinting: true, // IMPORTANT. We must allow the project's owner (this contract) to be able to mint new tokens on demand.
+          allowTerminalMigration: false, // no need
+          allowControllerMigration: false, // no need
+          holdFees: false, // no need
+          preferClaimedTokenOverride: false, // no need
+          useTotalOverflowForRedemptions: false, // no need
+          useDataSourceForPay: false, // no data source needed
+          useDataSourceForRedeem: false, // no data source needed
+          dataSource: address(0), // no need
+          metadata: 0 // no need
         }),
-        // IMPORTANT. Start right away so that we can mint tokens and distribute funds immediately.
-        0,
-        // IMPORTANT. Set the splits.
-        _groupedSplits,
-        // IMPORTANT. Set the fund access constraints.
-        _fundAccessConstraints,
+        0, // IMPORTANT. Start right away so that we can mint tokens and distribute funds immediately. 
+        _groupedSplits, // IMPORTANT. Set the splits. 
+        _fundAccessConstraints, // IMPORTANT. Set the fund access constraints.
         'Prepping lunch'
       );
 
-    // 3. Mint tokens to this contract accoring to lpPercent.
+    ///// 3. Mint tokens to this contract accoring to lpPercent.
+
+    // The tokens to mint is a function of the current total supply and the multiplier.
     uint256 _tokensToMint = controller.tokenStore().totalSupplyOf(_projectId) * lpSupplyMultiplier;
-    controller.mintTokensOf(
-      _projectId,
-      _tokensToMint,
-      address(this),
-      "Ingredients for lunch",
-      true, // Receive as ERC-20s.
-      false // Don't use reserved rate.
+
+    // Mint the tokens.
+    controller.mintTokensOf({
+      _projectId: _projectId,
+      _tokenCount: _tokensToMint,
+      _beneficiary: address(this),
+      _memo: "Ingredients for lunch",
+      _preferClaimedTokens: true, // Receive as ERC-20s.
+      _useReservedRate: false
+    });
+
+    ///// 4. Distribute funds from project according to fund access constraints.
+
+    _terminal.distributePayoutsOf({
+      _projectId: _projectId,
+      _amount: _projectBalance,
+      _currency: _currency,
+      _token: JBTokens.ETH,
+      _minReturnedTokens: _projectBalance,
+      _metadata: bytes("")
+    }
     );
 
-    // 4. Distribute funds from project according to fund access constraints.
-    _terminal.distributePayoutsOf(
-      _projectId,
-      _projectBalance,
-      _currency,
-      JBTokens.ETH,
-      _projectBalance,
-      bytes("")
-    );
+    ///// 5. Do LP dance.
 
-    // 5. Do LP dance.
+    // Wrap the ETH into WETH.
+    weth.deposit{value: address(this).balance }();
 
-    // Wrap it into WETH.
-    weth.deposit{value: address(this).balance - serverRefund }();
     // Approve the position manage to move this contract's tokens.
     IERC20(_token).approve(address(positionManager), _tokensToMint);
     IERC20(weth).approve(address(positionManager), weth.balanceOf(address(this)));
@@ -194,13 +203,11 @@ contract FairLunch is IERC721Receiver {
     );
     // Save a reference to the LP position.
     lpIdOf[_projectId] = _lpId;
-
-     // 6. Refund whoever served the lunch. 
-    Address.sendValue(payable(tx.origin), serverRefund);
   }
-
+  
+  // Collect ETH and token fees from the LP. Burn the tokens, and stick the ETH in the treasury to back the value of all remaining tokens.
   function sweepCrumbs(uint256 _projectId) external {
-    // 1. Collect the fees
+    ///// 1. Collect the LP fees.
     positionManager.collect(
         INonfungiblePositionManager.CollectParams({
             tokenId: lpIdOf[_projectId],
@@ -213,26 +220,31 @@ contract FairLunch is IERC721Receiver {
     // Unwind WETH to ETH.
     IWETH9(weth).withdraw(IERC20(weth).balanceOf(address(this)));
 
-    // 2. Dump ETH in project.
+    ///// 2. Dump ETH in project.
+
+    // Get the project's current ETH payment terminal. 
     IJBPaymentTerminal _terminal = controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH);
-    // Dump in project.
-    _terminal.addToBalanceOf{value: address(this).balance}(
-        _projectId,
-        address(this).balance,
-        JBTokens.ETH,
-        "",
-        abi.encode(bytes32("1"))
-    );
 
-    // 3. Burn tokens.
-    controller.burnTokensOf(
-    address(this),
-     _projectId,
-     controller.tokenStore().balanceOf(address(this), _projectId),
-     "mmmmm, delicious",
-     true
-    );
+    // Add the ETH to the project's balance.
+    _terminal.addToBalanceOf{value: address(this).balance}({
+      _projectId: _projectId,
+      _amount: address(this).balance,
+      _token: JBTokens.ETH,
+      _memo: "",
+      _metadata: abi.encode(bytes32("1"))
+  });
 
+    ///// 3. Burn the tokens.
+
+    controller.burnTokensOf({
+      _holder: address(this),
+      _projectId: _projectId,
+      _tokenCount: controller.tokenStore().balanceOf(address(this), _projectId),
+      _memo: "mmmmm, delicious",
+      _preferClaimedTokens: true
+    });
+    
+    // Mark the lunch as having been served.
     lunchHasBeenServedFor[_projectId] = true;
   }
 
@@ -246,7 +258,7 @@ contract FairLunch is IERC721Receiver {
       _from;
       _operator;
 
-      // Make sure the 721 received is a JBProject.
+      // Make sure the 721 received is the JBProjects contract.
       if (msg.sender != address(controller.projects())) revert YUCK();
 
       // Allow lunch to be served.
