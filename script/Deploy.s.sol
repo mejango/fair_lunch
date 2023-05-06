@@ -14,7 +14,6 @@ contract DeployMainnet is Script {
 }
 
 contract DeployGoerli is Script {
-  uint256 _projectId = 1000;
   uint256 _lpPercent = 50;
   string _symbol = 'LUNCH';
   string _name = 'Fair Lunch';
@@ -30,15 +29,6 @@ contract DeployGoerli is Script {
     vm.startBroadcast();
 
     // Deploy the deployer.
-    new FairLunch(
-      _projectId,
-      _lpPercent,
-      _symbol,
-      _name,
-      _controller,
-      _positionManager,
-      _weth,
-      _serverRefund
-    );
+    new FairLunch(_lpPercent, _symbol, _name, _controller, _positionManager, _weth, _serverRefund);
   }
 }

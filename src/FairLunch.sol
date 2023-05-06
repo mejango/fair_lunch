@@ -9,12 +9,11 @@ import '@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol';
 import '@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol';
 import '@openzeppelin/contracts/utils/Address.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol';
 import '@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol';
 import '@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol';
 import '@uniswap/v3-periphery/contracts/interfaces/IMulticall.sol';
-// import '@uniswap/v3-periphery/contracts/base/Multicall.sol';
 import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
-// import '@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol';
 
 // copy from import '@uniswap/v3-periphery/contracts/interfaces/external/IWETH9.sol';
 interface IWETH9 is IERC20 {
@@ -23,22 +22,25 @@ interface IWETH9 is IERC20 {
 }
 
 // mmmmmmm, delicious.
-contract FairLunch {
+contract FairLunch is IERC721Receiver {
   error YUCK();
+  error LUNCH_ALREADY_SERVED();
+  error LUNCH_CANT_BE_SERVED_YET();
+
   uint256 constant TOTAL_PERCENT = 100;
-  uint256 projectId;
+  mapping(uint256 => bool) lunchHasBeenServedFor;
+  mapping(uint256 => bool) lunchCanBeServedFor;
   uint256 lpSupplyMultiplier;
   IJBController3_1 private controller;
   INonfungiblePositionManager private positionManager;
   string symbol;
   string name;
   IWETH9 weth;
-  uint256 lpId;
+  mapping(uint256 => uint256) lpIdOf;
   uint256 serverRefund;
 
   // _lpPercent is out of 100. The percent of currently outstanding tokens that should be minted for LPing.
   constructor(
-    uint256 _projectId,
     uint256 _lpSupplyMultiplier,
     string memory _symbol,
     string memory _name,
@@ -48,7 +50,6 @@ contract FairLunch {
     uint256 _serverRefund
   ) {
     if (_lpSupplyMultiplier == 0) revert YUCK();
-    projectId = _projectId;
     lpSupplyMultiplier = _lpSupplyMultiplier;
     symbol = _symbol;
     name = _name;
@@ -57,15 +58,22 @@ contract FairLunch {
     weth = _weth;
     serverRefund = _serverRefund;
   }
+
   // mmmmm delicious.
-  function serveLunch() external {
+  function serveLunch(uint256 _projectId) external {
+    // Make sure lunch hasn't yet been served.
+    if (lunchHasBeenServedFor[_projectId]) revert LUNCH_ALREADY_SERVED();
+
+    // Make sure lunch is servable.
+    if (!lunchCanBeServedFor[_projectId]) revert LUNCH_CANT_BE_SERVED_YET();
+
     // Keep a reference to the project's payment terminal.
-    JBPayoutRedemptionPaymentTerminal3_1 _terminal = JBPayoutRedemptionPaymentTerminal3_1(address(controller.directory().primaryTerminalOf(projectId, JBTokens.ETH)));
+    JBPayoutRedemptionPaymentTerminal3_1 _terminal = JBPayoutRedemptionPaymentTerminal3_1(address(controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH)));
     // Keep a reference to the project's ETH balance.
-    uint256 _projectBalance =  _terminal.store().balanceOf(_terminal, projectId);
+    uint256 _projectBalance =  _terminal.store().balanceOf(_terminal, _projectId);
 
     // 1. Create ERC-20 for the project.
-    IERC20 _token = IERC20(address(controller.tokenStore().issueFor(projectId, name, symbol)));
+    IERC20 _token = IERC20(address(controller.tokenStore().issueFor(_projectId, name, symbol)));
 
     // 2. Schedules a funding cycle starting immediately that allows owner minting and distribution of all ETH in the project treasury to this contract.
     // Set fund access constraints to make all funds distributable.
@@ -97,7 +105,7 @@ contract FairLunch {
     
     // Set the new rules.
     controller.reconfigureFundingCyclesOf(
-        projectId,
+        _projectId,
         JBFundingCycleData ({
           duration: 0, // doesn't matter since no other reconfigurations are possible.
           weight: 0, // doesn't matter since payments are paused.
@@ -140,9 +148,9 @@ contract FairLunch {
       );
 
     // 3. Mint tokens to this contract accoring to lpPercent.
-    uint256 _tokensToMint = controller.tokenStore().totalSupplyOf(projectId) * lpSupplyMultiplier;
+    uint256 _tokensToMint = controller.tokenStore().totalSupplyOf(_projectId) * lpSupplyMultiplier;
     controller.mintTokensOf(
-      projectId,
+      _projectId,
       _tokensToMint,
       address(this),
       "Ingredients for lunch",
@@ -152,7 +160,7 @@ contract FairLunch {
 
     // 4. Distribute funds from project according to fund access constraints.
     _terminal.distributePayoutsOf(
-      projectId,
+      _projectId,
       _projectBalance,
       _currency,
       JBTokens.ETH,
@@ -161,6 +169,7 @@ contract FairLunch {
     );
 
     // 5. Do LP dance.
+
     // Wrap it into WETH.
     weth.deposit{value: address(this).balance - serverRefund }();
     // Approve the position manage to move this contract's tokens.
@@ -184,15 +193,17 @@ contract FairLunch {
         })
     );
     // Save a reference to the LP position.
-    lpId = _lpId;
-    
+    lpIdOf[_projectId] = _lpId;
+
+     // 6. Refund whoever served the lunch. 
     Address.sendValue(payable(tx.origin), serverRefund);
   }
-  function sweepCrumbs() external {
+
+  function sweepCrumbs(uint256 _projectId) external {
     // 1. Collect the fees
     positionManager.collect(
         INonfungiblePositionManager.CollectParams({
-            tokenId: lpId,
+            tokenId: lpIdOf[_projectId],
             recipient: address(this),
             amount0Max: type(uint128).max,
             amount1Max: type(uint128).max
@@ -203,10 +214,10 @@ contract FairLunch {
     IWETH9(weth).withdraw(IERC20(weth).balanceOf(address(this)));
 
     // 2. Dump ETH in project.
-    IJBPaymentTerminal _terminal = controller.directory().primaryTerminalOf(projectId, JBTokens.ETH);
+    IJBPaymentTerminal _terminal = controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH);
     // Dump in project.
     _terminal.addToBalanceOf{value: address(this).balance}(
-        projectId,
+        _projectId,
         address(this).balance,
         JBTokens.ETH,
         "",
@@ -216,10 +227,31 @@ contract FairLunch {
     // 3. Burn tokens.
     controller.burnTokensOf(
     address(this),
-     projectId,
-     controller.tokenStore().balanceOf(address(this), projectId),
+     _projectId,
+     controller.tokenStore().balanceOf(address(this), _projectId),
      "mmmmm, delicious",
      true
     );
+
+    lunchHasBeenServedFor[_projectId] = true;
   }
+
+  function onERC721Received(
+        address _operator,
+        address _from,
+        uint256 _tokenId,
+        bytes calldata _data
+    ) external returns (bytes4) {
+      _data;
+      _from;
+      _operator;
+
+      // Make sure the 721 received is a JBProject.
+      if (msg.sender != address(controller.projects())) revert YUCK();
+
+      // Allow lunch to be served.
+      lunchCanBeServedFor[_tokenId] = true;
+
+      return IERC721Receiver.onERC721Received.selector;
+    }
 }
