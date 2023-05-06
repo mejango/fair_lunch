@@ -1,0 +1,262 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "name": "ETH_PAYOUT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "RESERVED_TOKENS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x6098610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c806368fc68c7146042578063ad8710ad14605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212208e98554c41661fe025beb3c7c99ef2b724a81683ead6ba38795c239c35e7b7c364736f6c63430008110033",
+    "sourceMap": "57:115:39:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;57:115:39;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c806368fc68c7146042578063ad8710ad14605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212208e98554c41661fe025beb3c7c99ef2b724a81683ead6ba38795c239c35e7b7c364736f6c63430008110033",
+    "sourceMap": "57:115:39:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;126:43;;168:1;126:43;;;;;168:25:66;;;156:2;141:18;126:43:39;;;;;;;84:38;;121:1;84:38;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "ETH_PAYOUT()": "ad8710ad",
+    "RESERVED_TOKENS()": "68fc68c7"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ETH_PAYOUT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RESERVED_TOKENS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol\":\"JBSplitsGroups\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol\":{\"keccak256\":\"0x4183db6087bd8db645fc3a0d3d8afb0d6356e003650793f63c301ebbbae47269\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0114af7edb6cdc38cd472fea4e88bb4766c78290ddf97323ee40a4554d541124\",\"dweb:/ipfs/QmYmYmhSDRYKvxQoEBpaSabEiVrz9CV7A9dTCrXP3ZVNov\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.17+commit.8df45f5f"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "ETH_PAYOUT",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "RESERVED_TOKENS",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@jbx-protocol/=node_modules/@jbx-protocol/",
+        ":@openzeppelin/=node_modules/@openzeppelin/",
+        ":@paulrberg/=node_modules/@paulrberg/",
+        ":@uniswap/=node_modules/@uniswap/",
+        ":base64-sol/=node_modules/base64-sol/",
+        ":ds-test/=lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":prb-math/=node_modules/prb-math/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol": "JBSplitsGroups"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol": {
+        "keccak256": "0x4183db6087bd8db645fc3a0d3d8afb0d6356e003650793f63c301ebbbae47269",
+        "urls": [
+          "bzz-raw://0114af7edb6cdc38cd472fea4e88bb4766c78290ddf97323ee40a4554d541124",
+          "dweb:/ipfs/QmYmYmhSDRYKvxQoEBpaSabEiVrz9CV7A9dTCrXP3ZVNov"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol",
+    "id": 6318,
+    "exportedSymbols": {
+      "JBSplitsGroups": [
+        6317
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:141:39",
+    "nodes": [
+      {
+        "id": 6310,
+        "nodeType": "PragmaDirective",
+        "src": "32:23:39",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 6317,
+        "nodeType": "ContractDefinition",
+        "src": "57:115:39",
+        "nodes": [
+          {
+            "id": 6313,
+            "nodeType": "VariableDeclaration",
+            "src": "84:38:39",
+            "nodes": [],
+            "constant": true,
+            "functionSelector": "ad8710ad",
+            "mutability": "constant",
+            "name": "ETH_PAYOUT",
+            "nameLocation": "108:10:39",
+            "scope": 6317,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 6311,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "84:7:39",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "hexValue": "31",
+              "id": 6312,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "121:1:39",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_1_by_1",
+                "typeString": "int_const 1"
+              },
+              "value": "1"
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 6316,
+            "nodeType": "VariableDeclaration",
+            "src": "126:43:39",
+            "nodes": [],
+            "constant": true,
+            "functionSelector": "68fc68c7",
+            "mutability": "constant",
+            "name": "RESERVED_TOKENS",
+            "nameLocation": "150:15:39",
+            "scope": 6317,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 6314,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "126:7:39",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "hexValue": "32",
+              "id": 6315,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "168:1:39",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_2_by_1",
+                "typeString": "int_const 2"
+              },
+              "value": "2"
+            },
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "JBSplitsGroups",
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          6317
+        ],
+        "name": "JBSplitsGroups",
+        "nameLocation": "65:14:39",
+        "scope": 6318,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 39
+}

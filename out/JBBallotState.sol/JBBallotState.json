@@ -1,0 +1,70 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/enums/JBBallotState.sol",
+    "id": 2966,
+    "exportedSymbols": {
+      "JBBallotState": [
+        2965
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:79:3",
+    "nodes": [
+      {
+        "id": 2961,
+        "nodeType": "PragmaDirective",
+        "src": "32:23:3",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ]
+      },
+      {
+        "id": 2965,
+        "nodeType": "EnumDefinition",
+        "src": "57:53:3",
+        "nodes": [],
+        "canonicalName": "JBBallotState",
+        "members": [
+          {
+            "id": 2962,
+            "name": "Active",
+            "nameLocation": "80:6:3",
+            "nodeType": "EnumValue",
+            "src": "80:6:3"
+          },
+          {
+            "id": 2963,
+            "name": "Approved",
+            "nameLocation": "90:8:3",
+            "nodeType": "EnumValue",
+            "src": "90:8:3"
+          },
+          {
+            "id": 2964,
+            "name": "Failed",
+            "nameLocation": "102:6:3",
+            "nodeType": "EnumValue",
+            "src": "102:6:3"
+          }
+        ],
+        "name": "JBBallotState",
+        "nameLocation": "62:13:3"
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 3
+}
