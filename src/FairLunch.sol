@@ -41,6 +41,9 @@ contract FairLunch is IERC721Receiver {
     // A reference to the WETH contract
     IWETH9 private _weth;
 
+    // The address of the origin 'FairLunch', used to check in the init if the contract is the original or not.
+    address public codeOrigin;
+
     // Whether lunch has been served for each project.
     mapping(uint256 => bool) lunchHasBeenServedFor;
 
@@ -56,28 +59,31 @@ contract FairLunch is IERC721Receiver {
     // Access to Uniswap LPs.
     INonfungiblePositionManager positionManager;
 
-    string symbol;
-    string name;
-
     // The LP ID of a project who has had its lunch served.
     mapping(uint256 => uint256) lpIdOf;
 
-    // _lpPercent is out of 100. The percent of currently outstanding tokens that should be minted for LPing.
-    constructor(
-        uint256 _lpSupplyMultiplier,
-        string memory _symbol,
-        string memory _name,
-        IJBController3_1 _controller,
-        INonfungiblePositionManager _positionManager,
-        IWETH9 __weth
-    ) {
-        if (_lpSupplyMultiplier <= 0) revert YUCK();
-        lpSupplyMultiplier = _lpSupplyMultiplier;
-        symbol = _symbol;
-        name = _name;
+    // Set the boring stuff once.
+    constructor(IJBController3_1 _controller, INonfungiblePositionManager _positionManager, IWETH9 __weth) {
         controller = _controller;
         positionManager = _positionManager;
         _weth = __weth;
+
+        codeOrigin = address(this);
+    }
+
+    // How many tokens will make up the lunch?
+    // The amount of tokens minted into the LP is a function of this `_lpSupplyMultiplier'
+    // multiplied by the total supply at the time of serving.
+    function setTheTable(uint256 _lpSupplyMultiplier) public {
+        // Make the original un-initializable.
+        if (address(this) == codeOrigin) revert();
+
+        // Stop re-initialization.
+        if (address(controller) != address(0)) revert();
+
+        if (_lpSupplyMultiplier <= 0) revert YUCK();
+
+        lpSupplyMultiplier = _lpSupplyMultiplier;
     }
 
     // mmmmm delicious.
@@ -98,14 +104,13 @@ contract FairLunch is IERC721Receiver {
         // Keep a reference to the project's ETH balance.
         uint256 _projectBalance = _terminal.store().balanceOf(_terminal, _projectId);
 
-        ///// 1. Create ERC-20 for the project.
-
-        IERC20 _token = IERC20(address(controller.tokenStore().issueFor(_projectId, name, symbol)));
+        // Get a reference to the project's token.
+        address _token = address(controller.tokenStore().tokenOf(_projectId));
 
         // Keep a reference to the expected currency.
         uint256 _currency = _terminal.currencyForToken(JBTokens.ETH);
 
-        ///// 2. Schedule new funding cycle rules starting immediately that allows owner minting and distribution of all ETH in the project treasury to this contract.
+        ///// 1. Schedule new funding cycle rules starting immediately that allows owner minting and distribution of all ETH in the project treasury to this contract.
 
         // Set fund access constraints to make all funds distributable.
         JBFundAccessConstraints[] memory _fundAccessConstraints = new JBFundAccessConstraints[](1);
@@ -172,7 +177,7 @@ contract FairLunch is IERC721Receiver {
             "Prepping lunch"
         );
 
-        ///// 3. Mint tokens to this contract accoring to lpPercent.
+        ///// 2. Mint tokens to this contract accoring to lpPercent.
 
         // The tokens to mint is a function of the current total supply and the multiplier.
         uint256 _tokensToMint = controller.tokenStore().totalSupplyOf(_projectId) * lpSupplyMultiplier;
@@ -187,7 +192,7 @@ contract FairLunch is IERC721Receiver {
             _useReservedRate: false
         });
 
-        ///// 4. Distribute funds from project according to fund access constraints.
+        ///// 3. Distribute funds from project according to fund access constraints.
 
         _terminal.distributePayoutsOf({
             _projectId: _projectId,
@@ -198,7 +203,7 @@ contract FairLunch is IERC721Receiver {
             _metadata: bytes("")
         });
 
-        ///// 5. Do LP dance.
+        ///// 4. Do LP dance.
 
         // Wrap the ETH into WETH.
         _weth.deposit{value: address(this).balance}();
