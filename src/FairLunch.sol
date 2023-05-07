@@ -32,23 +32,34 @@ contract FairLunch is IERC721Receiver {
     // Only when the blunt has been passed can lunch be served.
     error LUNCH_CANT_BE_SERVED_YET();
 
-    // Yumm
     event LunchWasServed(uint256 projectId, uint256 lpId, uint256 projectBalance, uint256 tokensToMint, address sender);
-    // Yumm
     event CrumbsWereSwept(
         uint256 projectId, uint256 lpId, uint256 ethFeeAmount, uint256 tokenFeeAmount, address sender
     );
     event BluntHasBeenPassed(uint256 projectId);
 
-    uint256 private constant _TOTAL_PERCENT = 100;
+    // A reference to the WETH contract
+    IWETH9 private _weth;
+
+    // Whether lunch has been served for each project.
     mapping(uint256 => bool) lunchHasBeenServedFor;
+
+    // Whether lunch can be currently be served for each project.
     mapping(uint256 => bool) lunchCanBeServedFor;
+
+    // How many multiples of the original total supply should be minted for the LP.
     uint256 lpSupplyMultiplier;
+
+    // Access to JB ecosystem.
     IJBController3_1 controller;
+
+    // Access to Uniswap LPs.
     INonfungiblePositionManager positionManager;
+
     string symbol;
     string name;
-    IWETH9 weth;
+
+    // The LP ID of a project who has had its lunch served.
     mapping(uint256 => uint256) lpIdOf;
 
     // _lpPercent is out of 100. The percent of currently outstanding tokens that should be minted for LPing.
@@ -58,7 +69,7 @@ contract FairLunch is IERC721Receiver {
         string memory _name,
         IJBController3_1 _controller,
         INonfungiblePositionManager _positionManager,
-        IWETH9 _weth
+        IWETH9 __weth
     ) {
         if (_lpSupplyMultiplier <= 0) revert YUCK();
         lpSupplyMultiplier = _lpSupplyMultiplier;
@@ -66,7 +77,7 @@ contract FairLunch is IERC721Receiver {
         name = _name;
         controller = _controller;
         positionManager = _positionManager;
-        weth = _weth;
+        _weth = __weth;
     }
 
     // mmmmm delicious.
@@ -190,22 +201,22 @@ contract FairLunch is IERC721Receiver {
         ///// 5. Do LP dance.
 
         // Wrap the ETH into WETH.
-        weth.deposit{value: address(this).balance}();
+        _weth.deposit{value: address(this).balance}();
 
         // Approve the position manage to move this contract's tokens.
         IERC20(_token).approve(address(positionManager), _tokensToMint);
-        IERC20(weth).approve(address(positionManager), weth.balanceOf(address(this)));
+        IERC20(_weth).approve(address(positionManager), _weth.balanceOf(address(this)));
 
         // Create the pool and get a reference to the LP position.
         (uint256 _lpId,,,) = positionManager.mint(
             INonfungiblePositionManager.MintParams({
                 token0: address(_token),
-                token1: address(weth),
+                token1: address(_weth),
                 fee: 10000, // 1%
                 tickLower: -(887272 / 200) * 200, // max lower given 1% fee
                 tickUpper: (887272 / 200) * 200, // max upper given 1% fee
                 amount0Desired: _tokensToMint,
-                amount1Desired: weth.balanceOf(address(this)),
+                amount1Desired: _weth.balanceOf(address(this)),
                 amount0Min: 0,
                 amount1Min: 0,
                 recipient: address(this),
@@ -244,7 +255,7 @@ contract FairLunch is IERC721Receiver {
         );
 
         // Unwind WETH to ETH.
-        IWETH9(weth).withdraw(IERC20(weth).balanceOf(address(this)));
+        IWETH9(_weth).withdraw(IERC20(_weth).balanceOf(address(this)));
 
         ///// 2. Dump ETH in project.
 
