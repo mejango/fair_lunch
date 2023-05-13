@@ -7,6 +7,7 @@ import "@jbx-protocol/juice-contracts-v3/contracts/libraries/JBTokens.sol";
 import "@jbx-protocol/juice-contracts-v3/contracts/libraries/JBConstants.sol";
 import "@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol";
 import "@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol";
+import "@jbx-protocol/juice-contracts-v3/contracts/structs/JBSplit.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
@@ -32,49 +33,68 @@ contract FairLunch is IERC721Receiver {
     // Only when the blunt has been passed can lunch be served.
     error LUNCH_CANT_BE_SERVED_YET();
 
-    event LunchWasServed(uint256 projectId, uint256 lpId, uint256 projectBalance, uint256 tokensToMint, address sender);
-    event CrumbsWereSwept(
-        uint256 projectId, uint256 lpId, uint256 ethFeeAmount, uint256 tokenFeeAmount, address sender
+    event LunchWasServed(
+        uint256 indexed projectId,
+        uint256 indexed lpId,
+        uint256 projectBalance,
+        uint256 ethBalance,
+        uint256 tokenBalance,
+        address sender
     );
-    event BluntHasBeenPassed(uint256 projectId);
+    event CrumbsWereSwept(
+        uint256 indexed projectId, uint256 indexed lpId, uint256 ethFeeAmount, uint256 tokenFeeAmount, address sender
+    );
+    event BluntHasBeenPassed(uint256 indexed projectId);
 
     // A reference to the WETH contract
-    IWETH9 private _weth;
+    IWETH9 internal _weth;
+
+    // Who will receive a subset of ingredients before serving lunch.
+    JBSplit[] internal _splits;
 
     // The address of the origin 'FairLunch', used to check in the init if the contract is the original or not.
-    address public codeOrigin;
+    address public immutable codeOrigin;
 
     // Whether lunch has been served for each project.
-    mapping(uint256 => bool) lunchHasBeenServedFor;
+    mapping(uint256 => bool) public lunchHasBeenServedFor;
 
     // Whether lunch can be currently be served for each project.
-    mapping(uint256 => bool) lunchCanBeServedFor;
+    mapping(uint256 => bool) public lunchCanBeServedFor;
 
     // How many multiples of the original total supply should be minted for the LP.
-    uint256 lpSupplyMultiplier;
+    uint256 public lpSupplyMultiplier;
 
     // Access to JB ecosystem.
-    IJBController3_1 controller;
+    IJBController3_1 public controller;
 
     // Access to Uniswap LPs.
-    INonfungiblePositionManager positionManager;
+    INonfungiblePositionManager public positionManager;
 
     // The LP ID of a project who has had its lunch served.
-    mapping(uint256 => uint256) lpIdOf;
+    mapping(uint256 => uint256) public lpIdOf;
+
+    /** 
+      @notice
+      Get the splits. 
+
+      @return The splits the lunch will be distributed between.
+    */
+    function splits() external view returns (JBSplit[] memory) {
+      return _splits;
+    }
 
     // Set the boring stuff once.
     constructor(IJBController3_1 _controller, INonfungiblePositionManager _positionManager, IWETH9 __weth) {
         controller = _controller;
         positionManager = _positionManager;
         _weth = __weth;
-
         codeOrigin = address(this);
     }
 
-    // How many tokens will make up the lunch?
+    // How many tokens will make up the lunch? Who will the lunch be split between before LPing?
     // The amount of tokens minted into the LP is a function of this `_lpSupplyMultiplier'
     // multiplied by the total supply at the time of serving.
-    function setTheTable(uint256 _lpSupplyMultiplier) public {
+    function setTheTable(uint256 _lpSupplyMultiplier, JBSplit[] calldata __splits) public {
         // Make the original un-initializable.
         if (address(this) == codeOrigin) revert();
 
@@ -84,6 +104,32 @@ contract FairLunch is IERC721Receiver {
         if (_lpSupplyMultiplier <= 0) revert YUCK();
 
         lpSupplyMultiplier = _lpSupplyMultiplier;
+
+        // Keep a reference to teh number of splits that are stored.
+        uint256 _numberOfSplits = __splits.length;
+
+        // Keep a reference to the split being iterated on.
+        JBSplit memory _split;
+
+        for (uint256 _i; _i < _numberOfSplits;) {
+          // Set the split being iterated on.
+          _split = __splits[_i];
+
+          // Store the split.
+          _splits[_i] = JBSplit({
+              preferClaimed: _split.preferClaimed,
+              preferAddToBalance: _split.preferAddToBalance,
+              percent: _split.percent,
+              projectId: _split.projectId,
+              beneficiary: _split.beneficiary,
+              lockedUntil: _split.lockedUntil,
+              allocator: _split.allocator
+          });
+
+          unchecked {
+            ++_i;
+          }
+        }
     }
 
     // mmmmm delicious.
@@ -112,70 +158,100 @@ contract FairLunch is IERC721Receiver {
 
         ///// 1. Schedule new funding cycle rules starting immediately that allows owner minting and distribution of all ETH in the project treasury to this contract.
 
-        // Set fund access constraints to make all funds distributable.
-        JBFundAccessConstraints[] memory _fundAccessConstraints = new JBFundAccessConstraints[](1);
-        _fundAccessConstraints[0] = JBFundAccessConstraints({
-            terminal: _terminal,
-            token: JBTokens.ETH,
-            distributionLimit: _projectBalance,
-            distributionLimitCurrency: _currency,
-            overflowAllowance: 0,
-            overflowAllowanceCurrency: 0
-        });
-        // Add a 100% split routed to this contract.
-        JBSplit memory _split = JBSplit({
-            preferClaimed: false,
-            preferAddToBalance: false,
-            percent: JBConstants.SPLITS_TOTAL_PERCENT,
-            projectId: 0,
-            beneficiary: payable(address(this)),
-            lockedUntil: 0,
-            allocator: IJBSplitAllocator(address(0))
-        });
-        // Package it up.
-        JBSplit[] memory _splits = new JBSplit[](1);
-        _splits[0] = _split;
-        JBGroupedSplits[] memory _groupedSplits = new JBGroupedSplits[](1);
-        _groupedSplits[0] = JBGroupedSplits({group: JBSplitsGroups.ETH_PAYOUT, splits: _splits});
+        {
+          // Set fund access constraints to make all funds distributable.
+          JBFundAccessConstraints[] memory _fundAccessConstraints = new JBFundAccessConstraints[](1);
+          _fundAccessConstraints[0] = JBFundAccessConstraints({
+              terminal: _terminal,
+              token: JBTokens.ETH,
+              distributionLimit: _projectBalance,
+              distributionLimitCurrency: _currency,
+              overflowAllowance: 0,
+              overflowAllowanceCurrency: 0
+          });
 
-        // Set the new rules.
-        controller.reconfigureFundingCyclesOf(
-            _projectId,
-            JBFundingCycleData({
-                duration: 0, // doesn't matter since no other reconfigurations are possible.
-                weight: 0, // doesn't matter since payments are paused.
-                discountRate: 0, // doesn't matter since no other reconfigurations are possible.
-                ballot: IJBFundingCycleBallot(address(0)) // doesn't matter since no other reconfigurations are possible.
-            }),
-            JBFundingCycleMetadata({
-                global: JBGlobalFundingCycleMetadata({
-                    allowSetTerminals: false, // no need
-                    allowSetController: false, // no need
-                    pauseTransfers: false // no need
-                }),
-                reservedRate: 0, // no need
-                redemptionRate: JBConstants.MAX_REDEMPTION_RATE, // refund whenever.
-                ballotRedemptionRate: JBConstants.MAX_REDEMPTION_RATE, // doesn't matter since no ballot is used.
-                pausePay: true, // IMPORTANT. No more payments.
-                pauseDistributions: false, // IMPORTANT. Distributions must be enabled.
-                pauseRedeem: false, // IMPORTANT. Redeeming must be enabled.
-                pauseBurn: false, // IMPORTANT. Burning must be enabled.
-                allowMinting: true, // IMPORTANT. We must allow the project's owner (this contract) to be able to mint new tokens on demand.
-                allowTerminalMigration: false, // no need
-                allowControllerMigration: false, // no need
-                holdFees: false, // no need
-                preferClaimedTokenOverride: false, // no need
-                useTotalOverflowForRedemptions: false, // no need
-                useDataSourceForPay: false, // no data source needed
-                useDataSourceForRedeem: false, // no data source needed
-                dataSource: address(0), // no need
-                metadata: 0 // no need
-            }),
-            0, // IMPORTANT. Start right away so that we can mint tokens and distribute funds immediately.
-            _groupedSplits, // IMPORTANT. Set the splits.
-            _fundAccessConstraints, // IMPORTANT. Set the fund access constraints.
-            "Prepping lunch"
-        );
+          // Keep a reference to teh number of splits that are stored.
+          uint256 _numberOfSplits = _splits.length;
+
+          // Keep a reference to the splits that will be configured.
+          JBSplit[] memory __splits = new JBSplit[](_numberOfSplits + 1);
+
+          // Keep a reference to the split being iterate don.
+          JBSplit memory _split;
+
+          // Keep a reference to the percentage that the stored splits occupy.
+          uint256 _usedPercent;
+
+          // Populate the values.
+          for (uint256 _i; _i < _numberOfSplits;) {
+              // Get a reference to the split.
+              _split = _splits[_i];
+              // Set the split in the array of splits.
+              __splits[_i] = _split; 
+              // Increment the used percents.
+              _usedPercent += _split.percent;
+              unchecked {
+                  ++_i;
+              }
+          }
+
+          // Add a split routed to this contract that takes up any unused percents.
+          _split = JBSplit({
+              preferClaimed: false,
+              preferAddToBalance: false,
+              percent: JBConstants.SPLITS_TOTAL_PERCENT - _usedPercent,
+              projectId: 0,
+              beneficiary: payable(address(this)),
+              lockedUntil: 0,
+              allocator: IJBSplitAllocator(address(0))
+          });
+
+          // Set this split at the end of the array.
+          __splits[_numberOfSplits] = _split;
+
+          // Package it up.
+          JBGroupedSplits[] memory _groupedSplits = new JBGroupedSplits[](1);
+          _groupedSplits[0] = JBGroupedSplits({group: JBSplitsGroups.ETH_PAYOUT, splits: __splits});
+
+          // Set the new rules.
+          controller.reconfigureFundingCyclesOf(
+              _projectId,
+              JBFundingCycleData({
+                  duration: 0, // doesn't matter since no other reconfigurations are possible.
+                  weight: 0, // doesn't matter since payments are paused.
+                  discountRate: 0, // doesn't matter since no other reconfigurations are possible.
+                  ballot: IJBFundingCycleBallot(address(0)) // doesn't matter since no other reconfigurations are possible.
+              }),
+              JBFundingCycleMetadata({
+                  global: JBGlobalFundingCycleMetadata({
+                      allowSetTerminals: false, // no need
+                      allowSetController: false, // no need
+                      pauseTransfers: false // no need
+                  }),
+                  reservedRate: 0, // no need
+                  redemptionRate: JBConstants.MAX_REDEMPTION_RATE, // refund whenever.
+                  ballotRedemptionRate: JBConstants.MAX_REDEMPTION_RATE, // doesn't matter since no ballot is used.
+                  pausePay: true, // IMPORTANT. No more payments.
+                  pauseDistributions: false, // IMPORTANT. Distributions must be enabled.
+                  pauseRedeem: false, // IMPORTANT. Redeeming must be enabled.
+                  pauseBurn: false, // IMPORTANT. Burning must be enabled.
+                  allowMinting: true, // IMPORTANT. We must allow the project's owner (this contract) to be able to mint new tokens on demand.
+                  allowTerminalMigration: false, // no need
+                  allowControllerMigration: false, // no need
+                  holdFees: false, // no need
+                  preferClaimedTokenOverride: false, // no need
+                  useTotalOverflowForRedemptions: false, // no need
+                  useDataSourceForPay: false, // no data source needed
+                  useDataSourceForRedeem: false, // no data source needed
+                  dataSource: address(0), // no need
+                  metadata: 0 // no need
+              }),
+              0, // IMPORTANT. Start right away so that we can mint tokens and distribute funds immediately.
+              _groupedSplits, // IMPORTANT. Set the splits.
+              _fundAccessConstraints, // IMPORTANT. Set the fund access constraints.
+              "Prepping lunch"
+          );
+        }
 
         ///// 2. Mint tokens to this contract accoring to lpPercent.
 
@@ -205,8 +281,10 @@ contract FairLunch is IERC721Receiver {
 
         ///// 4. Do LP dance.
 
+        uint256 _ethBalance = address(this).balance;
+        
         // Wrap the ETH into WETH.
-        _weth.deposit{value: address(this).balance}();
+        _weth.deposit{value: _ethBalance}();
 
         // Approve the position manage to move this contract's tokens.
         IERC20(_token).approve(address(positionManager), _tokensToMint);
@@ -238,7 +316,8 @@ contract FairLunch is IERC721Receiver {
             projectId: _projectId,
             lpId: _lpId,
             projectBalance: _projectBalance,
-            tokensToMint: _tokensToMint,
+            ethBalance: _ethBalance,
+            tokenBalance: _tokensToMint,
             sender: msg.sender
         });
     }

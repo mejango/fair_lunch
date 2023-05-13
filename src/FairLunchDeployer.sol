@@ -17,10 +17,8 @@ contract FairLunchDeployer {
     //*********************************************************************//
 
     // A fair lunch for all.
-    function offerFairLunch(
-        uint256 _lpSupplyMultiplier
-    ) external returns (FairLunch _fairLunch) {
+    function offerFairLunch(uint256 _lpSupplyMultiplier, JBSplit[] memory _splits) external returns (FairLunch _fairLunch) {
         _fairLunch = FairLunch(Clones.clone(address(fairLunchOrigin)));
-        _fairLunch.setTheTable(_lpSupplyMultiplier);
+        _fairLunch.setTheTable(_lpSupplyMultiplier, _splits);
     }
 }
