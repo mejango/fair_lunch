@@ -12,11 +12,18 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
-import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IMulticall.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
 
+
+// copy from import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
+library TickMath {
+    /// @dev The minimum tick that may be passed to #getSqrtRatioAtTick computed from log base 1.0001 of 2**-128
+    int24 internal constant MIN_TICK = -887272;
+    /// @dev The maximum tick that may be passed to #getSqrtRatioAtTick computed from log base 1.0001 of 2**128
+    int24 internal constant MAX_TICK = -MIN_TICK;
+}
 
 // copy from import '@uniswap/v3-periphery/contracts/interfaces/external/IWETH9.sol';
 interface IWETH9 is IERC20 {
@@ -102,6 +109,8 @@ contract FairLunch is IERC721Receiver {
         // Do nother more if there's no one to share lunch with.
         if (_numberOfSplits == 0) return;
 
+        // Store the splits.
+
         // Keep a reference to the split being iterated on.
         JBSplit memory _split;
 
@@ -126,9 +135,83 @@ contract FairLunch is IERC721Receiver {
         }
     }
 
+    // Serve lunch once the Blunt has been received.
+    function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data)
+        external
+        returns (bytes4)
+    {
+        _data;
+        _from;
+        _operator;
+
+        // Make sure the 721 received is the JBProjects contract.
+        if (msg.sender != address(controller.projects())) revert YUCK();
+
+        // Serve lunch.
+        _serveLunch(_tokenId);
+
+        return IERC721Receiver.onERC721Received.selector;
+    }
+
+    // Collect ETH and token fees from the LP. Burn the tokens, and stick the ETH in the treasury to back the value of all remaining tokens.
+    function sweepCrumbs(uint256 _projectId) external {
+        // Keep a reference to the ID of the LP.
+        uint256 _lpId = lpIdOf[_projectId];
+
+        ///// 1. Collect the LP fees.
+
+        positionManager.collect(
+            INonfungiblePositionManager.CollectParams({
+                tokenId: _lpId,
+                recipient: address(this),
+                amount0Max: type(uint128).max,
+                amount1Max: type(uint128).max
+            })
+        );
+
+        // Unwind WETH to ETH.
+        IWETH9(_weth).withdraw(IERC20(_weth).balanceOf(address(this)));
+
+        ///// 2. Dump ETH in project.
+
+        // Get the project's current ETH payment terminal.
+        IJBPaymentTerminal _terminal = controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH);
+
+        uint256 _ethBalanceOf = address(this).balance;
+
+        // Add the ETH to the project's balance.
+        _terminal.addToBalanceOf{value: address(this).balance}({
+            _projectId: _projectId,
+            _amount: _ethBalanceOf,
+            _token: JBTokens.ETH,
+            _memo: "",
+            _metadata: abi.encode(bytes32("1"))
+        });
+
+        ///// 3. Burn the tokens.
+
+        uint256 _tokenBalanceOf = controller.tokenStore().balanceOf(address(this), _projectId);
+
+        controller.burnTokensOf({
+            _holder: address(this),
+            _projectId: _projectId,
+            _tokenCount: _tokenBalanceOf,
+            _memo: "mmmmm, delicious",
+            _preferClaimedTokens: true
+        });
+
+        emit CrumbsWereSwept({
+            projectId: _projectId,
+            lpId: _lpId,
+            ethFeeAmount: _ethBalanceOf,
+            tokenFeeAmount: _tokenBalanceOf,
+            sender: msg.sender
+        });
+    }
+
     // mmmmm delicious.
     //
-    // Anyone can send this transaction to serve the lunch once the blunt has been passed. Lunch can only be served once.
+    // The lunch is serve once the blunt has been passed. Any lunch not portioned to a pre-programmed split will be pooled in an LP.
     function _serveLunch(uint256 _projectId) internal {
         // Keep a reference to the project's payment terminal, where its funds are stored.
         JBPayoutRedemptionPaymentTerminal3_1 _terminal = JBPayoutRedemptionPaymentTerminal3_1(
@@ -284,8 +367,8 @@ contract FairLunch is IERC721Receiver {
                 token0: address(_token),
                 token1: address(_weth),
                 fee: 10000, // 1%
-                tickLower: MIN_TICK, // max lower given 1% fee
-                tickUpper: MAX_TICK, // max upper given 1% fee
+                tickLower: TickMath.MIN_TICK, // max lower given 1% fee
+                tickUpper: TickMath.MAX_TICK, // max upper given 1% fee
                 amount0Desired: _tokensToMint,
                 amount1Desired: _weth.balanceOf(address(this)),
                 amount0Min: 0,
@@ -305,78 +388,5 @@ contract FairLunch is IERC721Receiver {
             tokenBalance: _tokensToMint,
             sender: msg.sender
         });
-    }
-
-    // Collect ETH and token fees from the LP. Burn the tokens, and stick the ETH in the treasury to back the value of all remaining tokens.
-    function sweepCrumbs(uint256 _projectId) external {
-        // Keep a reference to the ID of the LP.
-        uint256 _lpId = lpIdOf[_projectId];
-
-        ///// 1. Collect the LP fees.
-
-        positionManager.collect(
-            INonfungiblePositionManager.CollectParams({
-                tokenId: _lpId,
-                recipient: address(this),
-                amount0Max: type(uint128).max,
-                amount1Max: type(uint128).max
-            })
-        );
-
-        // Unwind WETH to ETH.
-        IWETH9(_weth).withdraw(IERC20(_weth).balanceOf(address(this)));
-
-        ///// 2. Dump ETH in project.
-
-        // Get the project's current ETH payment terminal.
-        IJBPaymentTerminal _terminal = controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH);
-
-        uint256 _ethBalanceOf = address(this).balance;
-
-        // Add the ETH to the project's balance.
-        _terminal.addToBalanceOf{value: address(this).balance}({
-            _projectId: _projectId,
-            _amount: _ethBalanceOf,
-            _token: JBTokens.ETH,
-            _memo: "",
-            _metadata: abi.encode(bytes32("1"))
-        });
-
-        ///// 3. Burn the tokens.
-
-        uint256 _tokenBalanceOf = controller.tokenStore().balanceOf(address(this), _projectId);
-
-        controller.burnTokensOf({
-            _holder: address(this),
-            _projectId: _projectId,
-            _tokenCount: _tokenBalanceOf,
-            _memo: "mmmmm, delicious",
-            _preferClaimedTokens: true
-        });
-
-        emit CrumbsWereSwept({
-            projectId: _projectId,
-            lpId: _lpId,
-            ethFeeAmount: _ethBalanceOf,
-            tokenFeeAmount: _tokenBalanceOf,
-            sender: msg.sender
-        });
-    }
-
-    function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data)
-        external
-        returns (bytes4)
-    {
-        _data;
-        _from;
-        _operator;
-
-        // Make sure the 721 received is the JBProjects contract.
-        if (msg.sender != address(controller.projects())) revert YUCK();
-
-        // Serve lunch.
-        _serveLunch(_tokenId);
-
-        return IERC721Receiver.onERC721Received.selector;
     }
 }
