@@ -28,10 +28,6 @@ interface IWETH9 is IERC20 {
 contract FairLunch is IERC721Receiver {
     // Thrown when some parameter doesn't make sense.
     error YUCK();
-    // Can't serve lunch twice.
-    error LUNCH_ALREADY_SERVED();
-    // Only when the blunt has been passed can lunch be served.
-    error LUNCH_CANT_BE_SERVED_YET();
 
     event LunchWasServed(
         uint256 indexed projectId,
@@ -44,7 +40,6 @@ contract FairLunch is IERC721Receiver {
     event CrumbsWereSwept(
         uint256 indexed projectId, uint256 indexed lpId, uint256 ethFeeAmount, uint256 tokenFeeAmount, address sender
     );
-    event BluntHasBeenPassed(uint256 indexed projectId);
 
     // A reference to the WETH contract
     IWETH9 internal _weth;
@@ -54,12 +49,6 @@ contract FairLunch is IERC721Receiver {
 
     // The address of the origin 'FairLunch', used to check in the init if the contract is the original or not.
     address public immutable codeOrigin;
-
-    // Whether lunch has been served for each project.
-    mapping(uint256 => bool) public lunchHasBeenServedFor;
-
-    // Whether lunch can be currently be served for each project.
-    mapping(uint256 => bool) public lunchCanBeServedFor;
 
     // How many multiples of the original total supply should be minted for the LP.
     uint256 public lpSupplyMultiplier;
@@ -108,6 +97,9 @@ contract FairLunch is IERC721Receiver {
         // Keep a reference to teh number of splits that are stored.
         uint256 _numberOfSplits = __splits.length;
 
+        // Do nother more if there's no one to share lunch with.
+        if (_numberOfSplits == 0) return;
+
         // Keep a reference to the split being iterated on.
         JBSplit memory _split;
 
@@ -135,13 +127,7 @@ contract FairLunch is IERC721Receiver {
     // mmmmm delicious.
     //
     // Anyone can send this transaction to serve the lunch once the blunt has been passed. Lunch can only be served once.
-    function serveLunch(uint256 _projectId) external {
-        // Make sure lunch hasn't yet been served.
-        if (lunchHasBeenServedFor[_projectId]) revert LUNCH_ALREADY_SERVED();
-
-        // Make sure lunch is servable.
-        if (!lunchCanBeServedFor[_projectId]) revert LUNCH_CANT_BE_SERVED_YET();
-
+    function _serveLunch(uint256 _projectId) internal {
         // Keep a reference to the project's payment terminal, where its funds are stored.
         JBPayoutRedemptionPaymentTerminal3_1 _terminal = JBPayoutRedemptionPaymentTerminal3_1(
             address(controller.directory().primaryTerminalOf(_projectId, JBTokens.ETH))
@@ -173,7 +159,7 @@ contract FairLunch is IERC721Receiver {
           // Keep a reference to teh number of splits that are stored.
           uint256 _numberOfSplits = _splits.length;
 
-          // Keep a reference to the splits that will be configured.
+          // Keep a reference to the splits that will be configured. There will be one more split than the amount stored, the LP portion.
           JBSplit[] memory __splits = new JBSplit[](_numberOfSplits + 1);
 
           // Keep a reference to the split being iterate don.
@@ -309,9 +295,6 @@ contract FairLunch is IERC721Receiver {
         // Save a reference to the LP position.
         lpIdOf[_projectId] = _lpId;
 
-        // Mark the lunch as having been served.
-        lunchHasBeenServedFor[_projectId] = true;
-
         emit LunchWasServed({
             projectId: _projectId,
             lpId: _lpId,
@@ -389,10 +372,8 @@ contract FairLunch is IERC721Receiver {
         // Make sure the 721 received is the JBProjects contract.
         if (msg.sender != address(controller.projects())) revert YUCK();
 
-        // Allow lunch to be served.
-        lunchCanBeServedFor[_tokenId] = true;
-
-        emit BluntHasBeenPassed(_tokenId);
+        // Serve lunch.
+        _serveLunch(_tokenId);
 
         return IERC721Receiver.onERC721Received.selector;
     }
