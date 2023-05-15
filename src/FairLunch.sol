@@ -12,9 +12,11 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
+import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IMulticall.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
+
 
 // copy from import '@uniswap/v3-periphery/contracts/interfaces/external/IWETH9.sol';
 interface IWETH9 is IERC20 {
@@ -282,8 +284,8 @@ contract FairLunch is IERC721Receiver {
                 token0: address(_token),
                 token1: address(_weth),
                 fee: 10000, // 1%
-                tickLower: -(887272 / 200) * 200, // max lower given 1% fee
-                tickUpper: (887272 / 200) * 200, // max upper given 1% fee
+                tickLower: MIN_TICK, // max lower given 1% fee
+                tickUpper: MAX_TICK, // max upper given 1% fee
                 amount0Desired: _tokensToMint,
                 amount1Desired: _weth.balanceOf(address(this)),
                 amount0Min: 0,
