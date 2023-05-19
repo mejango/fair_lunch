@@ -268,7 +268,7 @@
     "tickBitmap(int16)": "5339c296",
     "ticks(int24)": "f30dba93"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"feeGrowthGlobal0X128\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeGrowthGlobal1X128\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liquidity\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"observations\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"blockTimestamp\",\"type\":\"uint32\"},{\"internalType\":\"int56\",\"name\":\"tickCumulative\",\"type\":\"int56\"},{\"internalType\":\"uint160\",\"name\":\"secondsPerLiquidityCumulativeX128\",\"type\":\"uint160\"},{\"internalType\":\"bool\",\"name\":\"initialized\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key\",\"type\":\"bytes32\"}],\"name\":\"positions\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"_liquidity\",\"type\":\"uint128\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthInside0LastX128\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthInside1LastX128\",\"type\":\"uint256\"},{\"internalType\":\"uint128\",\"name\":\"tokensOwed0\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"tokensOwed1\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"protocolFees\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"token0\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"token1\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"slot0\",\"outputs\":[{\"internalType\":\"uint160\",\"name\":\"sqrtPriceX96\",\"type\":\"uint160\"},{\"internalType\":\"int24\",\"name\":\"tick\",\"type\":\"int24\"},{\"internalType\":\"uint16\",\"name\":\"observationIndex\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"observationCardinality\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"observationCardinalityNext\",\"type\":\"uint16\"},{\"internalType\":\"uint8\",\"name\":\"feeProtocol\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"unlocked\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int16\",\"name\":\"wordPosition\",\"type\":\"int16\"}],\"name\":\"tickBitmap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int24\",\"name\":\"tick\",\"type\":\"int24\"}],\"name\":\"ticks\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"liquidityGross\",\"type\":\"uint128\"},{\"internalType\":\"int128\",\"name\":\"liquidityNet\",\"type\":\"int128\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthOutside0X128\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthOutside1X128\",\"type\":\"uint256\"},{\"internalType\":\"int56\",\"name\":\"tickCumulativeOutside\",\"type\":\"int56\"},{\"internalType\":\"uint160\",\"name\":\"secondsPerLiquidityOutsideX128\",\"type\":\"uint160\"},{\"internalType\":\"uint32\",\"name\":\"secondsOutside\",\"type\":\"uint32\"},{\"internalType\":\"bool\",\"name\":\"initialized\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"feeGrowthGlobal0X128()\":{\"details\":\"This value can overflow the uint256\"},\"feeGrowthGlobal1X128()\":{\"details\":\"This value can overflow the uint256\"},\"liquidity()\":{\"details\":\"This value has no relationship to the total liquidity across all ticks\"},\"observations(uint256)\":{\"details\":\"You most likely want to use #observe() instead of this method to get an observation as of some amount of time ago, rather than at a specific index in the array.\",\"params\":{\"index\":\"The element of the observations array to fetch\"},\"returns\":{\"blockTimestamp\":\"The timestamp of the observation, Returns tickCumulative the tick multiplied by seconds elapsed for the life of the pool as of the observation timestamp, Returns secondsPerLiquidityCumulativeX128 the seconds per in range liquidity for the life of the pool as of the observation timestamp, Returns initialized whether the observation has been initialized and the values are safe to use\"}},\"positions(bytes32)\":{\"params\":{\"key\":\"The position's key is a hash of a preimage composed by the owner, tickLower and tickUpper\"},\"returns\":{\"_liquidity\":\"The amount of liquidity in the position, Returns feeGrowthInside0LastX128 fee growth of token0 inside the tick range as of the last mint/burn/poke, Returns feeGrowthInside1LastX128 fee growth of token1 inside the tick range as of the last mint/burn/poke, Returns tokensOwed0 the computed amount of token0 owed to the position as of the last mint/burn/poke, Returns tokensOwed1 the computed amount of token1 owed to the position as of the last mint/burn/poke\"}},\"protocolFees()\":{\"details\":\"Protocol fees will never exceed uint128 max in either token\"},\"slot0()\":{\"returns\":{\"sqrtPriceX96\":\"The current price of the pool as a sqrt(token1/token0) Q64.96 value tick The current tick of the pool, i.e. according to the last tick transition that was run. This value may not always be equal to SqrtTickMath.getTickAtSqrtRatio(sqrtPriceX96) if the price is on a tick boundary. observationIndex The index of the last oracle observation that was written, observationCardinality The current maximum number of observations stored in the pool, observationCardinalityNext The next maximum number of observations, to be updated when the observation. feeProtocol The protocol fee for both tokens of the pool. Encoded as two 4 bit values, where the protocol fee of token1 is shifted 4 bits and the protocol fee of token0 is the lower 4 bits. Used as the denominator of a fraction of the swap fee, e.g. 4 means 1/4th of the swap fee. unlocked Whether the pool is currently locked to reentrancy\"}},\"ticks(int24)\":{\"params\":{\"tick\":\"The tick to look up\"},\"returns\":{\"liquidityGross\":\"the total amount of position liquidity that uses the pool either as tick lower or tick upper, liquidityNet how much liquidity changes when the pool price crosses the tick, feeGrowthOutside0X128 the fee growth on the other side of the tick from the current tick in token0, feeGrowthOutside1X128 the fee growth on the other side of the tick from the current tick in token1, tickCumulativeOutside the cumulative tick value on the other side of the tick from the current tick secondsPerLiquidityOutsideX128 the seconds spent per liquidity on the other side of the tick from the current tick, secondsOutside the seconds spent on the other side of the tick from the current tick, initialized Set to true if the tick is initialized, i.e. liquidityGross is greater than 0, otherwise equal to false. Outside values can only be used if the tick is initialized, i.e. if liquidityGross is greater than 0. In addition, these values are only relative and must be used only in comparison to previous snapshots for a specific position.\"}}},\"title\":\"Pool state that can change\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"feeGrowthGlobal0X128()\":{\"notice\":\"The fee growth as a Q128.128 fees of token0 collected per unit of liquidity for the entire life of the pool\"},\"feeGrowthGlobal1X128()\":{\"notice\":\"The fee growth as a Q128.128 fees of token1 collected per unit of liquidity for the entire life of the pool\"},\"liquidity()\":{\"notice\":\"The currently in range liquidity available to the pool\"},\"observations(uint256)\":{\"notice\":\"Returns data about a specific observation index\"},\"positions(bytes32)\":{\"notice\":\"Returns the information about a position by the position's key\"},\"protocolFees()\":{\"notice\":\"The amounts of token0 and token1 that are owed to the protocol\"},\"slot0()\":{\"notice\":\"The 0th storage slot in the pool stores many values, and is exposed as a single method to save gas when accessed externally.\"},\"tickBitmap(int16)\":{\"notice\":\"Returns 256 packed tick initialized boolean values. See TickBitmap for more information\"},\"ticks(int24)\":{\"notice\":\"Look up information about a specific tick in the pool\"}},\"notice\":\"These methods compose the pool's state, and can change with any frequency including multiple times per transaction\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol\":\"IUniswapV3PoolState\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol\":{\"keccak256\":\"0x852dc1f5df7dcf7f11e7bb3eed79f0cea72ad4b25f6a9d2c35aafb48925fd49f\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://ed63907c38ff36b0e22bc9ffc53e791ea74f0d4f0e7c257fdfb5aaf8825b1f0f\",\"dweb:/ipfs/QmSQrckghEjs6HVsA5GVgpNpZWvTXMY5eQLF7cN6deFeEg\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"feeGrowthGlobal0X128\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeGrowthGlobal1X128\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liquidity\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"observations\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"blockTimestamp\",\"type\":\"uint32\"},{\"internalType\":\"int56\",\"name\":\"tickCumulative\",\"type\":\"int56\"},{\"internalType\":\"uint160\",\"name\":\"secondsPerLiquidityCumulativeX128\",\"type\":\"uint160\"},{\"internalType\":\"bool\",\"name\":\"initialized\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key\",\"type\":\"bytes32\"}],\"name\":\"positions\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"_liquidity\",\"type\":\"uint128\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthInside0LastX128\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthInside1LastX128\",\"type\":\"uint256\"},{\"internalType\":\"uint128\",\"name\":\"tokensOwed0\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"tokensOwed1\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"protocolFees\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"token0\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"token1\",\"type\":\"uint128\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"slot0\",\"outputs\":[{\"internalType\":\"uint160\",\"name\":\"sqrtPriceX96\",\"type\":\"uint160\"},{\"internalType\":\"int24\",\"name\":\"tick\",\"type\":\"int24\"},{\"internalType\":\"uint16\",\"name\":\"observationIndex\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"observationCardinality\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"observationCardinalityNext\",\"type\":\"uint16\"},{\"internalType\":\"uint8\",\"name\":\"feeProtocol\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"unlocked\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int16\",\"name\":\"wordPosition\",\"type\":\"int16\"}],\"name\":\"tickBitmap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"int24\",\"name\":\"tick\",\"type\":\"int24\"}],\"name\":\"ticks\",\"outputs\":[{\"internalType\":\"uint128\",\"name\":\"liquidityGross\",\"type\":\"uint128\"},{\"internalType\":\"int128\",\"name\":\"liquidityNet\",\"type\":\"int128\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthOutside0X128\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeGrowthOutside1X128\",\"type\":\"uint256\"},{\"internalType\":\"int56\",\"name\":\"tickCumulativeOutside\",\"type\":\"int56\"},{\"internalType\":\"uint160\",\"name\":\"secondsPerLiquidityOutsideX128\",\"type\":\"uint160\"},{\"internalType\":\"uint32\",\"name\":\"secondsOutside\",\"type\":\"uint32\"},{\"internalType\":\"bool\",\"name\":\"initialized\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"feeGrowthGlobal0X128()\":{\"details\":\"This value can overflow the uint256\"},\"feeGrowthGlobal1X128()\":{\"details\":\"This value can overflow the uint256\"},\"liquidity()\":{\"details\":\"This value has no relationship to the total liquidity across all ticks\"},\"observations(uint256)\":{\"details\":\"You most likely want to use #observe() instead of this method to get an observation as of some amount of time ago, rather than at a specific index in the array.\",\"params\":{\"index\":\"The element of the observations array to fetch\"},\"returns\":{\"blockTimestamp\":\"The timestamp of the observation, Returns tickCumulative the tick multiplied by seconds elapsed for the life of the pool as of the observation timestamp, Returns secondsPerLiquidityCumulativeX128 the seconds per in range liquidity for the life of the pool as of the observation timestamp, Returns initialized whether the observation has been initialized and the values are safe to use\"}},\"positions(bytes32)\":{\"params\":{\"key\":\"The position's key is a hash of a preimage composed by the owner, tickLower and tickUpper\"},\"returns\":{\"_liquidity\":\"The amount of liquidity in the position, Returns feeGrowthInside0LastX128 fee growth of token0 inside the tick range as of the last mint/burn/poke, Returns feeGrowthInside1LastX128 fee growth of token1 inside the tick range as of the last mint/burn/poke, Returns tokensOwed0 the computed amount of token0 owed to the position as of the last mint/burn/poke, Returns tokensOwed1 the computed amount of token1 owed to the position as of the last mint/burn/poke\"}},\"protocolFees()\":{\"details\":\"Protocol fees will never exceed uint128 max in either token\"},\"slot0()\":{\"returns\":{\"sqrtPriceX96\":\"The current price of the pool as a sqrt(token1/token0) Q64.96 value tick The current tick of the pool, i.e. according to the last tick transition that was run. This value may not always be equal to SqrtTickMath.getTickAtSqrtRatio(sqrtPriceX96) if the price is on a tick boundary. observationIndex The index of the last oracle observation that was written, observationCardinality The current maximum number of observations stored in the pool, observationCardinalityNext The next maximum number of observations, to be updated when the observation. feeProtocol The protocol fee for both tokens of the pool. Encoded as two 4 bit values, where the protocol fee of token1 is shifted 4 bits and the protocol fee of token0 is the lower 4 bits. Used as the denominator of a fraction of the swap fee, e.g. 4 means 1/4th of the swap fee. unlocked Whether the pool is currently locked to reentrancy\"}},\"ticks(int24)\":{\"params\":{\"tick\":\"The tick to look up\"},\"returns\":{\"liquidityGross\":\"the total amount of position liquidity that uses the pool either as tick lower or tick upper, liquidityNet how much liquidity changes when the pool price crosses the tick, feeGrowthOutside0X128 the fee growth on the other side of the tick from the current tick in token0, feeGrowthOutside1X128 the fee growth on the other side of the tick from the current tick in token1, tickCumulativeOutside the cumulative tick value on the other side of the tick from the current tick secondsPerLiquidityOutsideX128 the seconds spent per liquidity on the other side of the tick from the current tick, secondsOutside the seconds spent on the other side of the tick from the current tick, initialized Set to true if the tick is initialized, i.e. liquidityGross is greater than 0, otherwise equal to false. Outside values can only be used if the tick is initialized, i.e. if liquidityGross is greater than 0. In addition, these values are only relative and must be used only in comparison to previous snapshots for a specific position.\"}}},\"title\":\"Pool state that can change\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"feeGrowthGlobal0X128()\":{\"notice\":\"The fee growth as a Q128.128 fees of token0 collected per unit of liquidity for the entire life of the pool\"},\"feeGrowthGlobal1X128()\":{\"notice\":\"The fee growth as a Q128.128 fees of token1 collected per unit of liquidity for the entire life of the pool\"},\"liquidity()\":{\"notice\":\"The currently in range liquidity available to the pool\"},\"observations(uint256)\":{\"notice\":\"Returns data about a specific observation index\"},\"positions(bytes32)\":{\"notice\":\"Returns the information about a position by the position's key\"},\"protocolFees()\":{\"notice\":\"The amounts of token0 and token1 that are owed to the protocol\"},\"slot0()\":{\"notice\":\"The 0th storage slot in the pool stores many values, and is exposed as a single method to save gas when accessed externally.\"},\"tickBitmap(int16)\":{\"notice\":\"Returns 256 packed tick initialized boolean values. See TickBitmap for more information\"},\"ticks(int24)\":{\"notice\":\"Look up information about a specific tick in the pool\"}},\"notice\":\"These methods compose the pool's state, and can change with any frequency including multiple times per transaction\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol\":\"IUniswapV3PoolState\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":20000000},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@prb/=node_modules/@prb/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol\":{\"keccak256\":\"0x852dc1f5df7dcf7f11e7bb3eed79f0cea72ad4b25f6a9d2c35aafb48925fd49f\",\"license\":\"GPL-2.0-or-later\",\"urls\":[\"bzz-raw://ed63907c38ff36b0e22bc9ffc53e791ea74f0d4f0e7c257fdfb5aaf8825b1f0f\",\"dweb:/ipfs/QmSQrckghEjs6HVsA5GVgpNpZWvTXMY5eQLF7cN6deFeEg\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.17+commit.8df45f5f"
@@ -610,6 +610,7 @@
         ":@jbx-protocol/=node_modules/@jbx-protocol/",
         ":@openzeppelin/=node_modules/@openzeppelin/",
         ":@paulrberg/=node_modules/@paulrberg/",
+        ":@prb/=node_modules/@prb/",
         ":@uniswap/=node_modules/@uniswap/",
         ":base64-sol/=node_modules/base64-sol/",
         ":ds-test/=lib/ds-test/src/",
@@ -618,7 +619,7 @@
       ],
       "optimizer": {
         "enabled": true,
-        "runs": 200
+        "runs": 20000000
       },
       "metadata": {
         "bytecodeHash": "ipfs"
@@ -642,19 +643,19 @@
   },
   "ast": {
     "absolutePath": "node_modules/@uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol",
-    "id": 7510,
+    "id": 31475,
     "exportedSymbols": {
       "IUniswapV3PoolState": [
-        7509
+        31474
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "45:6465:70",
+    "src": "45:6465:89",
     "nodes": [
       {
-        "id": 7403,
+        "id": 31368,
         "nodeType": "PragmaDirective",
-        "src": "45:24:70",
+        "src": "45:24:89",
         "nodes": [],
         "literals": [
           "solidity",
@@ -664,19 +665,19 @@
         ]
       },
       {
-        "id": 7509,
+        "id": 31474,
         "nodeType": "ContractDefinition",
-        "src": "240:6269:70",
+        "src": "240:6269:89",
         "nodes": [
           {
-            "id": 7422,
+            "id": 31387,
             "nodeType": "FunctionDefinition",
-            "src": "1421:317:70",
+            "src": "1421:317:89",
             "nodes": [],
             "documentation": {
-              "id": 7405,
+              "id": 31370,
               "nodeType": "StructuredDocumentation",
-              "src": "276:1140:70",
+              "src": "276:1140:89",
               "text": "@notice The 0th storage slot in the pool stores many values, and is exposed as a single method to save gas\n when accessed externally.\n @return sqrtPriceX96 The current price of the pool as a sqrt(token1/token0) Q64.96 value\n tick The current tick of the pool, i.e. according to the last tick transition that was run.\n This value may not always be equal to SqrtTickMath.getTickAtSqrtRatio(sqrtPriceX96) if the price is on a tick\n boundary.\n observationIndex The index of the last oracle observation that was written,\n observationCardinality The current maximum number of observations stored in the pool,\n observationCardinalityNext The next maximum number of observations, to be updated when the observation.\n feeProtocol The protocol fee for both tokens of the pool.\n Encoded as two 4 bit values, where the protocol fee of token1 is shifted 4 bits and the protocol fee of token0\n is the lower 4 bits. Used as the denominator of a fraction of the swap fee, e.g. 4 means 1/4th of the swap fee.\n unlocked Whether the pool is currently locked to reentrancy"
             },
             "functionSelector": "3850c7bd",
@@ -684,26 +685,26 @@
             "kind": "function",
             "modifiers": [],
             "name": "slot0",
-            "nameLocation": "1430:5:70",
+            "nameLocation": "1430:5:89",
             "parameters": {
-              "id": 7406,
+              "id": 31371,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1435:2:70"
+              "src": "1435:2:89"
             },
             "returnParameters": {
-              "id": 7421,
+              "id": 31386,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7408,
+                  "id": 31373,
                   "mutability": "mutable",
                   "name": "sqrtPriceX96",
-                  "nameLocation": "1506:12:70",
+                  "nameLocation": "1506:12:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1498:20:70",
+                  "scope": 31387,
+                  "src": "1498:20:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -711,10 +712,10 @@
                     "typeString": "uint160"
                   },
                   "typeName": {
-                    "id": 7407,
+                    "id": 31372,
                     "name": "uint160",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1498:7:70",
+                    "src": "1498:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint160",
                       "typeString": "uint160"
@@ -724,13 +725,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7410,
+                  "id": 31375,
                   "mutability": "mutable",
                   "name": "tick",
-                  "nameLocation": "1538:4:70",
+                  "nameLocation": "1538:4:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1532:10:70",
+                  "scope": 31387,
+                  "src": "1532:10:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -738,10 +739,10 @@
                     "typeString": "int24"
                   },
                   "typeName": {
-                    "id": 7409,
+                    "id": 31374,
                     "name": "int24",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1532:5:70",
+                    "src": "1532:5:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int24",
                       "typeString": "int24"
@@ -751,13 +752,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7412,
+                  "id": 31377,
                   "mutability": "mutable",
                   "name": "observationIndex",
-                  "nameLocation": "1563:16:70",
+                  "nameLocation": "1563:16:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1556:23:70",
+                  "scope": 31387,
+                  "src": "1556:23:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -765,10 +766,10 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 7411,
+                    "id": 31376,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1556:6:70",
+                    "src": "1556:6:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
@@ -778,13 +779,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7414,
+                  "id": 31379,
                   "mutability": "mutable",
                   "name": "observationCardinality",
-                  "nameLocation": "1600:22:70",
+                  "nameLocation": "1600:22:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1593:29:70",
+                  "scope": 31387,
+                  "src": "1593:29:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -792,10 +793,10 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 7413,
+                    "id": 31378,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1593:6:70",
+                    "src": "1593:6:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
@@ -805,13 +806,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7416,
+                  "id": 31381,
                   "mutability": "mutable",
                   "name": "observationCardinalityNext",
-                  "nameLocation": "1643:26:70",
+                  "nameLocation": "1643:26:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1636:33:70",
+                  "scope": 31387,
+                  "src": "1636:33:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -819,10 +820,10 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 7415,
+                    "id": 31380,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1636:6:70",
+                    "src": "1636:6:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
@@ -832,13 +833,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7418,
+                  "id": 31383,
                   "mutability": "mutable",
                   "name": "feeProtocol",
-                  "nameLocation": "1689:11:70",
+                  "nameLocation": "1689:11:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1683:17:70",
+                  "scope": 31387,
+                  "src": "1683:17:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -846,10 +847,10 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 7417,
+                    "id": 31382,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1683:5:70",
+                    "src": "1683:5:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint8",
                       "typeString": "uint8"
@@ -859,13 +860,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7420,
+                  "id": 31385,
                   "mutability": "mutable",
                   "name": "unlocked",
-                  "nameLocation": "1719:8:70",
+                  "nameLocation": "1719:8:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7422,
-                  "src": "1714:13:70",
+                  "scope": 31387,
+                  "src": "1714:13:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -873,10 +874,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 7419,
+                    "id": 31384,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1714:4:70",
+                    "src": "1714:4:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -885,22 +886,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1484:253:70"
+              "src": "1484:253:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7428,
+            "id": 31393,
             "nodeType": "FunctionDefinition",
-            "src": "1917:64:70",
+            "src": "1917:64:89",
             "nodes": [],
             "documentation": {
-              "id": 7423,
+              "id": 31388,
               "nodeType": "StructuredDocumentation",
-              "src": "1744:168:70",
+              "src": "1744:168:89",
               "text": "@notice The fee growth as a Q128.128 fees of token0 collected per unit of liquidity for the entire life of the pool\n @dev This value can overflow the uint256"
             },
             "functionSelector": "f3058399",
@@ -908,26 +909,26 @@
             "kind": "function",
             "modifiers": [],
             "name": "feeGrowthGlobal0X128",
-            "nameLocation": "1926:20:70",
+            "nameLocation": "1926:20:89",
             "parameters": {
-              "id": 7424,
+              "id": 31389,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1946:2:70"
+              "src": "1946:2:89"
             },
             "returnParameters": {
-              "id": 7427,
+              "id": 31392,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7426,
+                  "id": 31391,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7428,
-                  "src": "1972:7:70",
+                  "scope": 31393,
+                  "src": "1972:7:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -935,10 +936,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7425,
+                    "id": 31390,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1972:7:70",
+                    "src": "1972:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -947,22 +948,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1971:9:70"
+              "src": "1971:9:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7434,
+            "id": 31399,
             "nodeType": "FunctionDefinition",
-            "src": "2160:64:70",
+            "src": "2160:64:89",
             "nodes": [],
             "documentation": {
-              "id": 7429,
+              "id": 31394,
               "nodeType": "StructuredDocumentation",
-              "src": "1987:168:70",
+              "src": "1987:168:89",
               "text": "@notice The fee growth as a Q128.128 fees of token1 collected per unit of liquidity for the entire life of the pool\n @dev This value can overflow the uint256"
             },
             "functionSelector": "46141319",
@@ -970,26 +971,26 @@
             "kind": "function",
             "modifiers": [],
             "name": "feeGrowthGlobal1X128",
-            "nameLocation": "2169:20:70",
+            "nameLocation": "2169:20:89",
             "parameters": {
-              "id": 7430,
+              "id": 31395,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2189:2:70"
+              "src": "2189:2:89"
             },
             "returnParameters": {
-              "id": 7433,
+              "id": 31398,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7432,
+                  "id": 31397,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7434,
-                  "src": "2215:7:70",
+                  "scope": 31399,
+                  "src": "2215:7:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -997,10 +998,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7431,
+                    "id": 31396,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2215:7:70",
+                    "src": "2215:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1009,22 +1010,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2214:9:70"
+              "src": "2214:9:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7442,
+            "id": 31407,
             "nodeType": "FunctionDefinition",
-            "src": "2382:79:70",
+            "src": "2382:79:89",
             "nodes": [],
             "documentation": {
-              "id": 7435,
+              "id": 31400,
               "nodeType": "StructuredDocumentation",
-              "src": "2230:147:70",
+              "src": "2230:147:89",
               "text": "@notice The amounts of token0 and token1 that are owed to the protocol\n @dev Protocol fees will never exceed uint128 max in either token"
             },
             "functionSelector": "1ad8b03b",
@@ -1032,26 +1033,26 @@
             "kind": "function",
             "modifiers": [],
             "name": "protocolFees",
-            "nameLocation": "2391:12:70",
+            "nameLocation": "2391:12:89",
             "parameters": {
-              "id": 7436,
+              "id": 31401,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2403:2:70"
+              "src": "2403:2:89"
             },
             "returnParameters": {
-              "id": 7441,
+              "id": 31406,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7438,
+                  "id": 31403,
                   "mutability": "mutable",
                   "name": "token0",
-                  "nameLocation": "2437:6:70",
+                  "nameLocation": "2437:6:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7442,
-                  "src": "2429:14:70",
+                  "scope": 31407,
+                  "src": "2429:14:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1059,10 +1060,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7437,
+                    "id": 31402,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2429:7:70",
+                    "src": "2429:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1072,13 +1073,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7440,
+                  "id": 31405,
                   "mutability": "mutable",
                   "name": "token1",
-                  "nameLocation": "2453:6:70",
+                  "nameLocation": "2453:6:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7442,
-                  "src": "2445:14:70",
+                  "scope": 31407,
+                  "src": "2445:14:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1086,10 +1087,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7439,
+                    "id": 31404,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2445:7:70",
+                    "src": "2445:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1098,22 +1099,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2428:32:70"
+              "src": "2428:32:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7448,
+            "id": 31413,
             "nodeType": "FunctionDefinition",
-            "src": "2622:53:70",
+            "src": "2622:53:89",
             "nodes": [],
             "documentation": {
-              "id": 7443,
+              "id": 31408,
               "nodeType": "StructuredDocumentation",
-              "src": "2467:150:70",
+              "src": "2467:150:89",
               "text": "@notice The currently in range liquidity available to the pool\n @dev This value has no relationship to the total liquidity across all ticks"
             },
             "functionSelector": "1a686502",
@@ -1121,26 +1122,26 @@
             "kind": "function",
             "modifiers": [],
             "name": "liquidity",
-            "nameLocation": "2631:9:70",
+            "nameLocation": "2631:9:89",
             "parameters": {
-              "id": 7444,
+              "id": 31409,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2640:2:70"
+              "src": "2640:2:89"
             },
             "returnParameters": {
-              "id": 7447,
+              "id": 31412,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7446,
+                  "id": 31411,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7448,
-                  "src": "2666:7:70",
+                  "scope": 31413,
+                  "src": "2666:7:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1148,10 +1149,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7445,
+                    "id": 31410,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2666:7:70",
+                    "src": "2666:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1160,22 +1161,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2665:9:70"
+              "src": "2665:9:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7470,
+            "id": 31435,
             "nodeType": "FunctionDefinition",
-            "src": "3930:397:70",
+            "src": "3930:397:89",
             "nodes": [],
             "documentation": {
-              "id": 7449,
+              "id": 31414,
               "nodeType": "StructuredDocumentation",
-              "src": "2681:1244:70",
+              "src": "2681:1244:89",
               "text": "@notice Look up information about a specific tick in the pool\n @param tick The tick to look up\n @return liquidityGross the total amount of position liquidity that uses the pool either as tick lower or\n tick upper,\n liquidityNet how much liquidity changes when the pool price crosses the tick,\n feeGrowthOutside0X128 the fee growth on the other side of the tick from the current tick in token0,\n feeGrowthOutside1X128 the fee growth on the other side of the tick from the current tick in token1,\n tickCumulativeOutside the cumulative tick value on the other side of the tick from the current tick\n secondsPerLiquidityOutsideX128 the seconds spent per liquidity on the other side of the tick from the current tick,\n secondsOutside the seconds spent on the other side of the tick from the current tick,\n initialized Set to true if the tick is initialized, i.e. liquidityGross is greater than 0, otherwise equal to false.\n Outside values can only be used if the tick is initialized, i.e. if liquidityGross is greater than 0.\n In addition, these values are only relative and must be used only in comparison to previous snapshots for\n a specific position."
             },
             "functionSelector": "f30dba93",
@@ -1183,20 +1184,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "ticks",
-            "nameLocation": "3939:5:70",
+            "nameLocation": "3939:5:89",
             "parameters": {
-              "id": 7452,
+              "id": 31417,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7451,
+                  "id": 31416,
                   "mutability": "mutable",
                   "name": "tick",
-                  "nameLocation": "3951:4:70",
+                  "nameLocation": "3951:4:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "3945:10:70",
+                  "scope": 31435,
+                  "src": "3945:10:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1204,10 +1205,10 @@
                     "typeString": "int24"
                   },
                   "typeName": {
-                    "id": 7450,
+                    "id": 31415,
                     "name": "int24",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3945:5:70",
+                    "src": "3945:5:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int24",
                       "typeString": "int24"
@@ -1216,21 +1217,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3944:12:70"
+              "src": "3944:12:89"
             },
             "returnParameters": {
-              "id": 7469,
+              "id": 31434,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7454,
+                  "id": 31419,
                   "mutability": "mutable",
                   "name": "liquidityGross",
-                  "nameLocation": "4025:14:70",
+                  "nameLocation": "4025:14:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4017:22:70",
+                  "scope": 31435,
+                  "src": "4017:22:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1238,10 +1239,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7453,
+                    "id": 31418,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4017:7:70",
+                    "src": "4017:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1251,13 +1252,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7456,
+                  "id": 31421,
                   "mutability": "mutable",
                   "name": "liquidityNet",
-                  "nameLocation": "4060:12:70",
+                  "nameLocation": "4060:12:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4053:19:70",
+                  "scope": 31435,
+                  "src": "4053:19:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1265,10 +1266,10 @@
                     "typeString": "int128"
                   },
                   "typeName": {
-                    "id": 7455,
+                    "id": 31420,
                     "name": "int128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4053:6:70",
+                    "src": "4053:6:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int128",
                       "typeString": "int128"
@@ -1278,13 +1279,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7458,
+                  "id": 31423,
                   "mutability": "mutable",
                   "name": "feeGrowthOutside0X128",
-                  "nameLocation": "4094:21:70",
+                  "nameLocation": "4094:21:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4086:29:70",
+                  "scope": 31435,
+                  "src": "4086:29:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1292,10 +1293,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7457,
+                    "id": 31422,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4086:7:70",
+                    "src": "4086:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1305,13 +1306,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7460,
+                  "id": 31425,
                   "mutability": "mutable",
                   "name": "feeGrowthOutside1X128",
-                  "nameLocation": "4137:21:70",
+                  "nameLocation": "4137:21:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4129:29:70",
+                  "scope": 31435,
+                  "src": "4129:29:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1319,10 +1320,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7459,
+                    "id": 31424,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4129:7:70",
+                    "src": "4129:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1332,13 +1333,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7462,
+                  "id": 31427,
                   "mutability": "mutable",
                   "name": "tickCumulativeOutside",
-                  "nameLocation": "4178:21:70",
+                  "nameLocation": "4178:21:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4172:27:70",
+                  "scope": 31435,
+                  "src": "4172:27:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1346,10 +1347,10 @@
                     "typeString": "int56"
                   },
                   "typeName": {
-                    "id": 7461,
+                    "id": 31426,
                     "name": "int56",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4172:5:70",
+                    "src": "4172:5:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int56",
                       "typeString": "int56"
@@ -1359,13 +1360,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7464,
+                  "id": 31429,
                   "mutability": "mutable",
                   "name": "secondsPerLiquidityOutsideX128",
-                  "nameLocation": "4221:30:70",
+                  "nameLocation": "4221:30:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4213:38:70",
+                  "scope": 31435,
+                  "src": "4213:38:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1373,10 +1374,10 @@
                     "typeString": "uint160"
                   },
                   "typeName": {
-                    "id": 7463,
+                    "id": 31428,
                     "name": "uint160",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4213:7:70",
+                    "src": "4213:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint160",
                       "typeString": "uint160"
@@ -1386,13 +1387,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7466,
+                  "id": 31431,
                   "mutability": "mutable",
                   "name": "secondsOutside",
-                  "nameLocation": "4272:14:70",
+                  "nameLocation": "4272:14:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4265:21:70",
+                  "scope": 31435,
+                  "src": "4265:21:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1400,10 +1401,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 7465,
+                    "id": 31430,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4265:6:70",
+                    "src": "4265:6:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -1413,13 +1414,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7468,
+                  "id": 31433,
                   "mutability": "mutable",
                   "name": "initialized",
-                  "nameLocation": "4305:11:70",
+                  "nameLocation": "4305:11:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7470,
-                  "src": "4300:16:70",
+                  "scope": 31435,
+                  "src": "4300:16:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1427,10 +1428,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 7467,
+                    "id": 31432,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4300:4:70",
+                    "src": "4300:4:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1439,22 +1440,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4003:323:70"
+              "src": "4003:323:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7478,
+            "id": 31443,
             "nodeType": "FunctionDefinition",
-            "src": "4437:72:70",
+            "src": "4437:72:89",
             "nodes": [],
             "documentation": {
-              "id": 7471,
+              "id": 31436,
               "nodeType": "StructuredDocumentation",
-              "src": "4333:99:70",
+              "src": "4333:99:89",
               "text": "@notice Returns 256 packed tick initialized boolean values. See TickBitmap for more information"
             },
             "functionSelector": "5339c296",
@@ -1462,20 +1463,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "tickBitmap",
-            "nameLocation": "4446:10:70",
+            "nameLocation": "4446:10:89",
             "parameters": {
-              "id": 7474,
+              "id": 31439,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7473,
+                  "id": 31438,
                   "mutability": "mutable",
                   "name": "wordPosition",
-                  "nameLocation": "4463:12:70",
+                  "nameLocation": "4463:12:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7478,
-                  "src": "4457:18:70",
+                  "scope": 31443,
+                  "src": "4457:18:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1483,10 +1484,10 @@
                     "typeString": "int16"
                   },
                   "typeName": {
-                    "id": 7472,
+                    "id": 31437,
                     "name": "int16",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4457:5:70",
+                    "src": "4457:5:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int16",
                       "typeString": "int16"
@@ -1495,21 +1496,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4456:20:70"
+              "src": "4456:20:89"
             },
             "returnParameters": {
-              "id": 7477,
+              "id": 31442,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7476,
+                  "id": 31441,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7478,
-                  "src": "4500:7:70",
+                  "scope": 31443,
+                  "src": "4500:7:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1517,10 +1518,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7475,
+                    "id": 31440,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "4500:7:70",
+                    "src": "4500:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1529,22 +1530,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "4499:9:70"
+              "src": "4499:9:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7494,
+            "id": 31459,
             "nodeType": "FunctionDefinition",
-            "src": "5220:279:70",
+            "src": "5220:279:89",
             "nodes": [],
             "documentation": {
-              "id": 7479,
+              "id": 31444,
               "nodeType": "StructuredDocumentation",
-              "src": "4515:700:70",
+              "src": "4515:700:89",
               "text": "@notice Returns the information about a position by the position's key\n @param key The position's key is a hash of a preimage composed by the owner, tickLower and tickUpper\n @return _liquidity The amount of liquidity in the position,\n Returns feeGrowthInside0LastX128 fee growth of token0 inside the tick range as of the last mint/burn/poke,\n Returns feeGrowthInside1LastX128 fee growth of token1 inside the tick range as of the last mint/burn/poke,\n Returns tokensOwed0 the computed amount of token0 owed to the position as of the last mint/burn/poke,\n Returns tokensOwed1 the computed amount of token1 owed to the position as of the last mint/burn/poke"
             },
             "functionSelector": "514ea4bf",
@@ -1552,20 +1553,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "positions",
-            "nameLocation": "5229:9:70",
+            "nameLocation": "5229:9:89",
             "parameters": {
-              "id": 7482,
+              "id": 31447,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7481,
+                  "id": 31446,
                   "mutability": "mutable",
                   "name": "key",
-                  "nameLocation": "5247:3:70",
+                  "nameLocation": "5247:3:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7494,
-                  "src": "5239:11:70",
+                  "scope": 31459,
+                  "src": "5239:11:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1573,10 +1574,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 7480,
+                    "id": 31445,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5239:7:70",
+                    "src": "5239:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1585,21 +1586,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5238:13:70"
+              "src": "5238:13:89"
             },
             "returnParameters": {
-              "id": 7493,
+              "id": 31458,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7484,
+                  "id": 31449,
                   "mutability": "mutable",
                   "name": "_liquidity",
-                  "nameLocation": "5320:10:70",
+                  "nameLocation": "5320:10:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7494,
-                  "src": "5312:18:70",
+                  "scope": 31459,
+                  "src": "5312:18:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1607,10 +1608,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7483,
+                    "id": 31448,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5312:7:70",
+                    "src": "5312:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1620,13 +1621,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7486,
+                  "id": 31451,
                   "mutability": "mutable",
                   "name": "feeGrowthInside0LastX128",
-                  "nameLocation": "5352:24:70",
+                  "nameLocation": "5352:24:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7494,
-                  "src": "5344:32:70",
+                  "scope": 31459,
+                  "src": "5344:32:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1634,10 +1635,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7485,
+                    "id": 31450,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5344:7:70",
+                    "src": "5344:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1647,13 +1648,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7488,
+                  "id": 31453,
                   "mutability": "mutable",
                   "name": "feeGrowthInside1LastX128",
-                  "nameLocation": "5398:24:70",
+                  "nameLocation": "5398:24:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7494,
-                  "src": "5390:32:70",
+                  "scope": 31459,
+                  "src": "5390:32:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1661,10 +1662,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7487,
+                    "id": 31452,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5390:7:70",
+                    "src": "5390:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1674,13 +1675,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7490,
+                  "id": 31455,
                   "mutability": "mutable",
                   "name": "tokensOwed0",
-                  "nameLocation": "5444:11:70",
+                  "nameLocation": "5444:11:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7494,
-                  "src": "5436:19:70",
+                  "scope": 31459,
+                  "src": "5436:19:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1688,10 +1689,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7489,
+                    "id": 31454,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5436:7:70",
+                    "src": "5436:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1701,13 +1702,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7492,
+                  "id": 31457,
                   "mutability": "mutable",
                   "name": "tokensOwed1",
-                  "nameLocation": "5477:11:70",
+                  "nameLocation": "5477:11:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7494,
-                  "src": "5469:19:70",
+                  "scope": 31459,
+                  "src": "5469:19:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1715,10 +1716,10 @@
                     "typeString": "uint128"
                   },
                   "typeName": {
-                    "id": 7491,
+                    "id": 31456,
                     "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "5469:7:70",
+                    "src": "5469:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
@@ -1727,22 +1728,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "5298:200:70"
+              "src": "5298:200:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 7508,
+            "id": 31473,
             "nodeType": "FunctionDefinition",
-            "src": "6259:248:70",
+            "src": "6259:248:89",
             "nodes": [],
             "documentation": {
-              "id": 7495,
+              "id": 31460,
               "nodeType": "StructuredDocumentation",
-              "src": "5505:749:70",
+              "src": "5505:749:89",
               "text": "@notice Returns data about a specific observation index\n @param index The element of the observations array to fetch\n @dev You most likely want to use #observe() instead of this method to get an observation as of some amount of time\n ago, rather than at a specific index in the array.\n @return blockTimestamp The timestamp of the observation,\n Returns tickCumulative the tick multiplied by seconds elapsed for the life of the pool as of the observation timestamp,\n Returns secondsPerLiquidityCumulativeX128 the seconds per in range liquidity for the life of the pool as of the observation timestamp,\n Returns initialized whether the observation has been initialized and the values are safe to use"
             },
             "functionSelector": "252c09d7",
@@ -1750,20 +1751,20 @@
             "kind": "function",
             "modifiers": [],
             "name": "observations",
-            "nameLocation": "6268:12:70",
+            "nameLocation": "6268:12:89",
             "parameters": {
-              "id": 7498,
+              "id": 31463,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7497,
+                  "id": 31462,
                   "mutability": "mutable",
                   "name": "index",
-                  "nameLocation": "6289:5:70",
+                  "nameLocation": "6289:5:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7508,
-                  "src": "6281:13:70",
+                  "scope": 31473,
+                  "src": "6281:13:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1771,10 +1772,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 7496,
+                    "id": 31461,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6281:7:70",
+                    "src": "6281:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1783,21 +1784,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "6280:15:70"
+              "src": "6280:15:89"
             },
             "returnParameters": {
-              "id": 7507,
+              "id": 31472,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 7500,
+                  "id": 31465,
                   "mutability": "mutable",
                   "name": "blockTimestamp",
-                  "nameLocation": "6363:14:70",
+                  "nameLocation": "6363:14:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7508,
-                  "src": "6356:21:70",
+                  "scope": 31473,
+                  "src": "6356:21:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1805,10 +1806,10 @@
                     "typeString": "uint32"
                   },
                   "typeName": {
-                    "id": 7499,
+                    "id": 31464,
                     "name": "uint32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6356:6:70",
+                    "src": "6356:6:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint32",
                       "typeString": "uint32"
@@ -1818,13 +1819,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7502,
+                  "id": 31467,
                   "mutability": "mutable",
                   "name": "tickCumulative",
-                  "nameLocation": "6397:14:70",
+                  "nameLocation": "6397:14:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7508,
-                  "src": "6391:20:70",
+                  "scope": 31473,
+                  "src": "6391:20:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1832,10 +1833,10 @@
                     "typeString": "int56"
                   },
                   "typeName": {
-                    "id": 7501,
+                    "id": 31466,
                     "name": "int56",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6391:5:70",
+                    "src": "6391:5:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_int56",
                       "typeString": "int56"
@@ -1845,13 +1846,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7504,
+                  "id": 31469,
                   "mutability": "mutable",
                   "name": "secondsPerLiquidityCumulativeX128",
-                  "nameLocation": "6433:33:70",
+                  "nameLocation": "6433:33:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7508,
-                  "src": "6425:41:70",
+                  "scope": 31473,
+                  "src": "6425:41:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1859,10 +1860,10 @@
                     "typeString": "uint160"
                   },
                   "typeName": {
-                    "id": 7503,
+                    "id": 31468,
                     "name": "uint160",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6425:7:70",
+                    "src": "6425:7:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint160",
                       "typeString": "uint160"
@@ -1872,13 +1873,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 7506,
+                  "id": 31471,
                   "mutability": "mutable",
                   "name": "initialized",
-                  "nameLocation": "6485:11:70",
+                  "nameLocation": "6485:11:89",
                   "nodeType": "VariableDeclaration",
-                  "scope": 7508,
-                  "src": "6480:16:70",
+                  "scope": 31473,
+                  "src": "6480:16:89",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1886,10 +1887,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 7505,
+                    "id": 31470,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "6480:4:70",
+                    "src": "6480:4:89",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -1898,9 +1899,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "6342:164:70"
+              "src": "6342:164:89"
             },
-            "scope": 7509,
+            "scope": 31474,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -1912,22 +1913,22 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 7404,
+          "id": 31369,
           "nodeType": "StructuredDocumentation",
-          "src": "71:169:70",
+          "src": "71:169:89",
           "text": "@title Pool state that can change\n @notice These methods compose the pool's state, and can change with any frequency including multiple times\n per transaction"
         },
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          7509
+          31474
         ],
         "name": "IUniswapV3PoolState",
-        "nameLocation": "250:19:70",
-        "scope": 7510,
+        "nameLocation": "250:19:89",
+        "scope": 31475,
         "usedErrors": []
       }
     ],
     "license": "GPL-2.0-or-later"
   },
-  "id": 70
+  "id": 89
 }

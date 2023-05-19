@@ -28,20 +28,20 @@
     }
   ],
   "bytecode": {
-    "object": "0x6098610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c806368fc68c7146042578063ad8710ad14605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212208e98554c41661fe025beb3c7c99ef2b724a81683ead6ba38795c239c35e7b7c364736f6c63430008110033",
-    "sourceMap": "57:115:39:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;57:115:39;;;;;;;;;;;;;;;;;",
+    "object": "0x6098610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c806368fc68c7146042578063ad8710ad14605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212204f258c10cfc4d4dbc317d49560008138da5eb1eac4ae5e5195cb6b35f3d415a164736f6c63430008110033",
+    "sourceMap": "57:115:51:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;57:115:51;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c806368fc68c7146042578063ad8710ad14605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212208e98554c41661fe025beb3c7c99ef2b724a81683ead6ba38795c239c35e7b7c364736f6c63430008110033",
-    "sourceMap": "57:115:39:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;126:43;;168:1;126:43;;;;;168:25:66;;;156:2;141:18;126:43:39;;;;;;;84:38;;121:1;84:38;",
+    "object": "0x7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c806368fc68c7146042578063ad8710ad14605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212204f258c10cfc4d4dbc317d49560008138da5eb1eac4ae5e5195cb6b35f3d415a164736f6c63430008110033",
+    "sourceMap": "57:115:51:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;126:43;;168:1;126:43;;;;;168:25:103;;;156:2;141:18;126:43:51;;;;;;;84:38;;121:1;84:38;",
     "linkReferences": {}
   },
   "methodIdentifiers": {
     "ETH_PAYOUT()": "ad8710ad",
     "RESERVED_TOKENS()": "68fc68c7"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ETH_PAYOUT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RESERVED_TOKENS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol\":\"JBSplitsGroups\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol\":{\"keccak256\":\"0x4183db6087bd8db645fc3a0d3d8afb0d6356e003650793f63c301ebbbae47269\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0114af7edb6cdc38cd472fea4e88bb4766c78290ddf97323ee40a4554d541124\",\"dweb:/ipfs/QmYmYmhSDRYKvxQoEBpaSabEiVrz9CV7A9dTCrXP3ZVNov\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ETH_PAYOUT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RESERVED_TOKENS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol\":\"JBSplitsGroups\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":20000000},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@prb/=node_modules/@prb/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol\":{\"keccak256\":\"0x4183db6087bd8db645fc3a0d3d8afb0d6356e003650793f63c301ebbbae47269\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0114af7edb6cdc38cd472fea4e88bb4766c78290ddf97323ee40a4554d541124\",\"dweb:/ipfs/QmYmYmhSDRYKvxQoEBpaSabEiVrz9CV7A9dTCrXP3ZVNov\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.17+commit.8df45f5f"
@@ -92,6 +92,7 @@
         ":@jbx-protocol/=node_modules/@jbx-protocol/",
         ":@openzeppelin/=node_modules/@openzeppelin/",
         ":@paulrberg/=node_modules/@paulrberg/",
+        ":@prb/=node_modules/@prb/",
         ":@uniswap/=node_modules/@uniswap/",
         ":base64-sol/=node_modules/base64-sol/",
         ":ds-test/=lib/ds-test/src/",
@@ -100,7 +101,7 @@
       ],
       "optimizer": {
         "enabled": true,
-        "runs": 200
+        "runs": 20000000
       },
       "metadata": {
         "bytecodeHash": "ipfs"
@@ -124,19 +125,19 @@
   },
   "ast": {
     "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBSplitsGroups.sol",
-    "id": 6318,
+    "id": 29693,
     "exportedSymbols": {
       "JBSplitsGroups": [
-        6317
+        29692
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:141:39",
+    "src": "32:141:51",
     "nodes": [
       {
-        "id": 6310,
+        "id": 29685,
         "nodeType": "PragmaDirective",
-        "src": "32:23:39",
+        "src": "32:23:51",
         "nodes": [],
         "literals": [
           "solidity",
@@ -146,21 +147,21 @@
         ]
       },
       {
-        "id": 6317,
+        "id": 29692,
         "nodeType": "ContractDefinition",
-        "src": "57:115:39",
+        "src": "57:115:51",
         "nodes": [
           {
-            "id": 6313,
+            "id": 29688,
             "nodeType": "VariableDeclaration",
-            "src": "84:38:39",
+            "src": "84:38:51",
             "nodes": [],
             "constant": true,
             "functionSelector": "ad8710ad",
             "mutability": "constant",
             "name": "ETH_PAYOUT",
-            "nameLocation": "108:10:39",
-            "scope": 6317,
+            "nameLocation": "108:10:51",
+            "scope": 29692,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -168,10 +169,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 6311,
+              "id": 29686,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "84:7:39",
+              "src": "84:7:51",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -179,14 +180,14 @@
             },
             "value": {
               "hexValue": "31",
-              "id": 6312,
+              "id": 29687,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "121:1:39",
+              "src": "121:1:51",
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_1_by_1",
                 "typeString": "int_const 1"
@@ -196,16 +197,16 @@
             "visibility": "public"
           },
           {
-            "id": 6316,
+            "id": 29691,
             "nodeType": "VariableDeclaration",
-            "src": "126:43:39",
+            "src": "126:43:51",
             "nodes": [],
             "constant": true,
             "functionSelector": "68fc68c7",
             "mutability": "constant",
             "name": "RESERVED_TOKENS",
-            "nameLocation": "150:15:39",
-            "scope": 6317,
+            "nameLocation": "150:15:51",
+            "scope": 29692,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -213,10 +214,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 6314,
+              "id": 29689,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "126:7:39",
+              "src": "126:7:51",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -224,14 +225,14 @@
             },
             "value": {
               "hexValue": "32",
-              "id": 6315,
+              "id": 29690,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "168:1:39",
+              "src": "168:1:51",
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_2_by_1",
                 "typeString": "int_const 2"
@@ -248,15 +249,15 @@
         "contractKind": "library",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          6317
+          29692
         ],
         "name": "JBSplitsGroups",
-        "nameLocation": "65:14:39",
-        "scope": 6318,
+        "nameLocation": "65:14:51",
+        "scope": 29693,
         "usedErrors": []
       }
     ],
     "license": "MIT"
   },
-  "id": 39
+  "id": 51
 }

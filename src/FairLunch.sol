@@ -15,6 +15,7 @@ import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IMulticall.sol";
 import "@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol";
+import "prb-math/contracts/PRBMath.sol";
 
 // copy from import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
 library TickMath {
@@ -70,11 +71,14 @@ contract FairLunch is IERC721Receiver {
     // The LP ID of a project who has had its lunch served.
     mapping(uint256 => uint256) public lpIdOf;
 
+    // The percent of lunch, out of SPLITS_TOTAL_PERCENT, going to LPing.
+    uint256 public lpPercent;
+
     /**
      * @notice
-     *   Get the splits. 
-     * 
-     *   @return The splits the lunch will be distributed between.
+     * Get the splits.
+     *
+     * @return The splits the lunch will be distributed between.
      */
     function splits() external view returns (JBSplit[] memory) {
         return _splits;
@@ -105,17 +109,21 @@ contract FairLunch is IERC721Receiver {
         // Keep a reference to teh number of splits that are stored.
         uint256 _numberOfSplits = __splits.length;
 
-        // Do nother more if there's no one to share lunch with.
-        if (_numberOfSplits == 0) return;
-
-        // Store the splits.
-
         // Keep a reference to the split being iterated on.
         JBSplit memory _split;
+
+        // Keep a reference to the percentage of payouts going to splits.
+        uint256 _splitsPercent = JBConstants.SPLITS_TOTAL_PERCENT;
 
         for (uint256 _i; _i < _numberOfSplits;) {
             // Set the split being iterated on.
             _split = __splits[_i];
+
+            // Increment the splits percent;
+            _splitsPercent += _split.percent;
+
+            // Make sure percents don't add up to more than 100%.
+            if (_splitsPercent > JBConstants.SPLITS_TOTAL_PERCENT) revert YUCK();
 
             // Store the split.
             _splits[_i] = JBSplit({
@@ -132,6 +140,9 @@ contract FairLunch is IERC721Receiver {
                 ++_i;
             }
         }
+
+        // Store the percent going to LP.
+        lpPercent = JBConstants.SPLITS_TOTAL_PERCENT - _splitsPercent;
     }
 
     // Serve lunch once the Blunt has been received.
@@ -246,38 +257,25 @@ contract FairLunch is IERC721Receiver {
             // Keep a reference to the splits that will be configured. There will be one more split than the amount stored, the LP portion.
             JBSplit[] memory __splits = new JBSplit[](_numberOfSplits + 1);
 
-            // Keep a reference to the split being iterate don.
-            JBSplit memory _split;
-
-            // Keep a reference to the percentage that the stored splits occupy.
-            uint256 _usedPercent;
-
             // Populate the values.
             for (uint256 _i; _i < _numberOfSplits;) {
-                // Get a reference to the split.
-                _split = _splits[_i];
                 // Set the split in the array of splits.
-                __splits[_i] = _split;
-                // Increment the used percents.
-                _usedPercent += _split.percent;
+                __splits[_i] = _splits[_i];
                 unchecked {
                     ++_i;
                 }
             }
 
             // Add a split routed to this contract that takes up any unused percents.
-            _split = JBSplit({
+            __splits[_numberOfSplits] = JBSplit({
                 preferClaimed: false,
                 preferAddToBalance: false,
-                percent: JBConstants.SPLITS_TOTAL_PERCENT - _usedPercent,
+                percent: lpPercent,
                 projectId: 0,
                 beneficiary: payable(address(this)),
                 lockedUntil: 0,
                 allocator: IJBSplitAllocator(address(0))
             });
-
-            // Set this split at the end of the array.
-            __splits[_numberOfSplits] = _split;
 
             // Package it up.
             JBGroupedSplits[] memory _groupedSplits = new JBGroupedSplits[](1);
@@ -325,8 +323,10 @@ contract FairLunch is IERC721Receiver {
 
         ///// 2. Mint tokens to this contract accoring to lpPercent.
 
-        // The tokens to mint is a function of the current total supply and the multiplier.
-        uint256 _tokensToMint = controller.tokenStore().totalSupplyOf(_projectId) * lpSupplyMultiplier;
+        // The tokens to mint is a function of the current total supply, the multiplier, and the percent of funds going to the LP.
+        uint256 _tokensToMint = PRBMath.mulDiv(
+            controller.tokenStore().totalSupplyOf(_projectId), lpPercent, JBConstants.SPLITS_TOTAL_PERCENT 
+        ) * lpSupplyMultiplier;
 
         // Mint the tokens.
         controller.mintTokensOf({

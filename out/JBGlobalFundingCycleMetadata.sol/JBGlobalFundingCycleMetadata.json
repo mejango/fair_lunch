@@ -10,19 +10,19 @@
   },
   "ast": {
     "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/structs/JBGlobalFundingCycleMetadata.sol",
-    "id": 6492,
+    "id": 29867,
     "exportedSymbols": {
       "JBGlobalFundingCycleMetadata": [
-        6491
+        29866
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:511:48",
+    "src": "32:511:60",
     "nodes": [
       {
-        "id": 6484,
+        "id": 29859,
         "nodeType": "PragmaDirective",
-        "src": "32:23:48",
+        "src": "32:23:60",
         "nodes": [],
         "literals": [
           "solidity",
@@ -32,21 +32,21 @@
         ]
       },
       {
-        "id": 6491,
+        "id": 29866,
         "nodeType": "StructDefinition",
-        "src": "427:115:48",
+        "src": "427:115:60",
         "nodes": [],
         "canonicalName": "JBGlobalFundingCycleMetadata",
         "members": [
           {
             "constant": false,
-            "id": 6486,
+            "id": 29861,
             "mutability": "mutable",
             "name": "allowSetTerminals",
-            "nameLocation": "472:17:48",
+            "nameLocation": "472:17:60",
             "nodeType": "VariableDeclaration",
-            "scope": 6491,
-            "src": "467:22:48",
+            "scope": 29866,
+            "src": "467:22:60",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -54,10 +54,10 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 6485,
+              "id": 29860,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
-              "src": "467:4:48",
+              "src": "467:4:60",
               "typeDescriptions": {
                 "typeIdentifier": "t_bool",
                 "typeString": "bool"
@@ -67,13 +67,13 @@
           },
           {
             "constant": false,
-            "id": 6488,
+            "id": 29863,
             "mutability": "mutable",
             "name": "allowSetController",
-            "nameLocation": "498:18:48",
+            "nameLocation": "498:18:60",
             "nodeType": "VariableDeclaration",
-            "scope": 6491,
-            "src": "493:23:48",
+            "scope": 29866,
+            "src": "493:23:60",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -81,10 +81,10 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 6487,
+              "id": 29862,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
-              "src": "493:4:48",
+              "src": "493:4:60",
               "typeDescriptions": {
                 "typeIdentifier": "t_bool",
                 "typeString": "bool"
@@ -94,13 +94,13 @@
           },
           {
             "constant": false,
-            "id": 6490,
+            "id": 29865,
             "mutability": "mutable",
             "name": "pauseTransfers",
-            "nameLocation": "525:14:48",
+            "nameLocation": "525:14:60",
             "nodeType": "VariableDeclaration",
-            "scope": 6491,
-            "src": "520:19:48",
+            "scope": 29866,
+            "src": "520:19:60",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -108,10 +108,10 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 6489,
+              "id": 29864,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
-              "src": "520:4:48",
+              "src": "520:4:60",
               "typeDescriptions": {
                 "typeIdentifier": "t_bool",
                 "typeString": "bool"
@@ -121,12 +121,12 @@
           }
         ],
         "name": "JBGlobalFundingCycleMetadata",
-        "nameLocation": "434:28:48",
-        "scope": 6492,
+        "nameLocation": "434:28:60",
+        "scope": 29867,
         "visibility": "public"
       }
     ],
     "license": "MIT"
   },
-  "id": 48
+  "id": 60
 }

@@ -10,19 +10,19 @@
   },
   "ast": {
     "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/structs/JBFee.sol",
-    "id": 6389,
+    "id": 29764,
     "exportedSymbols": {
       "JBFee": [
-        6388
+        29763
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:504:43",
+    "src": "32:504:55",
     "nodes": [
       {
-        "id": 6379,
+        "id": 29754,
         "nodeType": "PragmaDirective",
-        "src": "32:23:43",
+        "src": "32:23:55",
         "nodes": [],
         "literals": [
           "solidity",
@@ -32,21 +32,21 @@
         ]
       },
       {
-        "id": 6388,
+        "id": 29763,
         "nodeType": "StructDefinition",
-        "src": "442:93:43",
+        "src": "442:93:55",
         "nodes": [],
         "canonicalName": "JBFee",
         "members": [
           {
             "constant": false,
-            "id": 6381,
+            "id": 29756,
             "mutability": "mutable",
             "name": "amount",
-            "nameLocation": "467:6:43",
+            "nameLocation": "467:6:55",
             "nodeType": "VariableDeclaration",
-            "scope": 6388,
-            "src": "459:14:43",
+            "scope": 29763,
+            "src": "459:14:55",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -54,10 +54,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 6380,
+              "id": 29755,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "459:7:43",
+              "src": "459:7:55",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -67,13 +67,13 @@
           },
           {
             "constant": false,
-            "id": 6383,
+            "id": 29758,
             "mutability": "mutable",
             "name": "fee",
-            "nameLocation": "484:3:43",
+            "nameLocation": "484:3:55",
             "nodeType": "VariableDeclaration",
-            "scope": 6388,
-            "src": "477:10:43",
+            "scope": 29763,
+            "src": "477:10:55",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -81,10 +81,10 @@
               "typeString": "uint32"
             },
             "typeName": {
-              "id": 6382,
+              "id": 29757,
               "name": "uint32",
               "nodeType": "ElementaryTypeName",
-              "src": "477:6:43",
+              "src": "477:6:55",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint32",
                 "typeString": "uint32"
@@ -94,13 +94,13 @@
           },
           {
             "constant": false,
-            "id": 6385,
+            "id": 29760,
             "mutability": "mutable",
             "name": "feeDiscount",
-            "nameLocation": "498:11:43",
+            "nameLocation": "498:11:55",
             "nodeType": "VariableDeclaration",
-            "scope": 6388,
-            "src": "491:18:43",
+            "scope": 29763,
+            "src": "491:18:55",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -108,10 +108,10 @@
               "typeString": "uint32"
             },
             "typeName": {
-              "id": 6384,
+              "id": 29759,
               "name": "uint32",
               "nodeType": "ElementaryTypeName",
-              "src": "491:6:43",
+              "src": "491:6:55",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint32",
                 "typeString": "uint32"
@@ -121,13 +121,13 @@
           },
           {
             "constant": false,
-            "id": 6387,
+            "id": 29762,
             "mutability": "mutable",
             "name": "beneficiary",
-            "nameLocation": "521:11:43",
+            "nameLocation": "521:11:55",
             "nodeType": "VariableDeclaration",
-            "scope": 6388,
-            "src": "513:19:43",
+            "scope": 29763,
+            "src": "513:19:55",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -135,10 +135,10 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 6386,
+              "id": 29761,
               "name": "address",
               "nodeType": "ElementaryTypeName",
-              "src": "513:7:43",
+              "src": "513:7:55",
               "stateMutability": "nonpayable",
               "typeDescriptions": {
                 "typeIdentifier": "t_address",
@@ -149,12 +149,12 @@
           }
         ],
         "name": "JBFee",
-        "nameLocation": "449:5:43",
-        "scope": 6389,
+        "nameLocation": "449:5:55",
+        "scope": 29764,
         "visibility": "public"
       }
     ],
     "license": "MIT"
   },
-  "id": 43
+  "id": 55
 }

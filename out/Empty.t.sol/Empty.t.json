@@ -10,15 +10,15 @@
   },
   "ast": {
     "absolutePath": "test/Empty.t.sol",
-    "id": 23415,
+    "id": 34715,
     "exportedSymbols": {},
     "nodeType": "SourceUnit",
-    "src": "32:249:14",
+    "src": "32:249:101",
     "nodes": [
       {
-        "id": 23414,
+        "id": 34714,
         "nodeType": "PragmaDirective",
-        "src": "32:24:14",
+        "src": "32:24:101",
         "nodes": [],
         "literals": [
           "solidity",
@@ -30,5 +30,5 @@
     ],
     "license": "MIT"
   },
-  "id": 14
+  "id": 101
 }

@@ -10,19 +10,19 @@
   },
   "ast": {
     "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/structs/JBOperatorData.sol",
-    "id": 6512,
+    "id": 29887,
     "exportedSymbols": {
       "JBOperatorData": [
-        6511
+        29886
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:429:50",
+    "src": "32:429:62",
     "nodes": [
       {
-        "id": 6503,
+        "id": 29878,
         "nodeType": "PragmaDirective",
-        "src": "32:23:50",
+        "src": "32:23:62",
         "nodes": [],
         "literals": [
           "solidity",
@@ -32,21 +32,21 @@
         ]
       },
       {
-        "id": 6511,
+        "id": 29886,
         "nodeType": "StructDefinition",
-        "src": "366:94:50",
+        "src": "366:94:62",
         "nodes": [],
         "canonicalName": "JBOperatorData",
         "members": [
           {
             "constant": false,
-            "id": 6505,
+            "id": 29880,
             "mutability": "mutable",
             "name": "operator",
-            "nameLocation": "400:8:50",
+            "nameLocation": "400:8:62",
             "nodeType": "VariableDeclaration",
-            "scope": 6511,
-            "src": "392:16:50",
+            "scope": 29886,
+            "src": "392:16:62",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -54,10 +54,10 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 6504,
+              "id": 29879,
               "name": "address",
               "nodeType": "ElementaryTypeName",
-              "src": "392:7:50",
+              "src": "392:7:62",
               "stateMutability": "nonpayable",
               "typeDescriptions": {
                 "typeIdentifier": "t_address",
@@ -68,13 +68,13 @@
           },
           {
             "constant": false,
-            "id": 6507,
+            "id": 29882,
             "mutability": "mutable",
             "name": "domain",
-            "nameLocation": "420:6:50",
+            "nameLocation": "420:6:62",
             "nodeType": "VariableDeclaration",
-            "scope": 6511,
-            "src": "412:14:50",
+            "scope": 29886,
+            "src": "412:14:62",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -82,10 +82,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 6506,
+              "id": 29881,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "412:7:50",
+              "src": "412:7:62",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -95,13 +95,13 @@
           },
           {
             "constant": false,
-            "id": 6510,
+            "id": 29885,
             "mutability": "mutable",
             "name": "permissionIndexes",
-            "nameLocation": "440:17:50",
+            "nameLocation": "440:17:62",
             "nodeType": "VariableDeclaration",
-            "scope": 6511,
-            "src": "430:27:50",
+            "scope": 29886,
+            "src": "430:27:62",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -110,18 +110,18 @@
             },
             "typeName": {
               "baseType": {
-                "id": 6508,
+                "id": 29883,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "430:7:50",
+                "src": "430:7:62",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
-              "id": 6509,
+              "id": 29884,
               "nodeType": "ArrayTypeName",
-              "src": "430:9:50",
+              "src": "430:9:62",
               "typeDescriptions": {
                 "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                 "typeString": "uint256[]"
@@ -131,12 +131,12 @@
           }
         ],
         "name": "JBOperatorData",
-        "nameLocation": "373:14:50",
-        "scope": 6512,
+        "nameLocation": "373:14:62",
+        "scope": 29887,
         "visibility": "public"
       }
     ],
     "license": "MIT"
   },
-  "id": 50
+  "id": 62
 }

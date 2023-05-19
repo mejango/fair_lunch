@@ -28,20 +28,20 @@
     }
   ],
   "bytecode": {
-    "object": "0x6098610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c80631bf6c21b1460425780638322fff214605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea2646970667358221220a7caca8e7feaddf240b61d1985d971eac2278e71b2bca798210e0c5ff7ab6b0e64736f6c63430008110033",
-    "sourceMap": "57:94:34:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;57:94:34;;;;;;;;;;;;;;;;;",
+    "object": "0x6098610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c80631bf6c21b1460425780638322fff214605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212200ad6c3d19e3368d24fc7c1ba1cbf369c127b3e87fbe263d0a7d9210689526b0764736f6c63430008110033",
+    "sourceMap": "57:94:46:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;57:94:46;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c80631bf6c21b1460425780638322fff214605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea2646970667358221220a7caca8e7feaddf240b61d1985d971eac2278e71b2bca798210e0c5ff7ab6b0e64736f6c63430008110033",
-    "sourceMap": "57:94:34:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;117:31;;147:1;117:31;;;;;168:25:66;;;156:2;141:18;117:31:34;;;;;;;82;;112:1;82:31;",
+    "object": "0x7300000000000000000000000000000000000000003014608060405260043610603d5760003560e01c80631bf6c21b1460425780638322fff214605b575b600080fd5b6049600281565b60405190815260200160405180910390f35b604960018156fea26469706673582212200ad6c3d19e3368d24fc7c1ba1cbf369c127b3e87fbe263d0a7d9210689526b0764736f6c63430008110033",
+    "sourceMap": "57:94:46:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;117:31;;147:1;117:31;;;;;168:25:103;;;156:2;141:18;117:31:46;;;;;;;82;;112:1;82:31;",
     "linkReferences": {}
   },
   "methodIdentifiers": {
     "ETH()": "8322fff2",
     "USD()": "1bf6c21b"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ETH\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"USD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol\":\"JBCurrencies\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol\":{\"keccak256\":\"0x7e417ff25c173608ee4fe6d9fc3dcd5e1458c78c889af12bac47b1189a436076\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://92a96ba0dfa74f968db8d5f367c92a8c7e616c70cafab3b6d7f049e43b501e84\",\"dweb:/ipfs/QmdJHS7yVcXjTzN82LjNZp77uzYZPL3951NWit4i36pN7Q\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ETH\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"USD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol\":\"JBCurrencies\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":20000000},\"remappings\":[\":@jbx-protocol/=node_modules/@jbx-protocol/\",\":@openzeppelin/=node_modules/@openzeppelin/\",\":@paulrberg/=node_modules/@paulrberg/\",\":@prb/=node_modules/@prb/\",\":@uniswap/=node_modules/@uniswap/\",\":base64-sol/=node_modules/base64-sol/\",\":ds-test/=lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":prb-math/=node_modules/prb-math/\"]},\"sources\":{\"node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol\":{\"keccak256\":\"0x7e417ff25c173608ee4fe6d9fc3dcd5e1458c78c889af12bac47b1189a436076\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://92a96ba0dfa74f968db8d5f367c92a8c7e616c70cafab3b6d7f049e43b501e84\",\"dweb:/ipfs/QmdJHS7yVcXjTzN82LjNZp77uzYZPL3951NWit4i36pN7Q\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.17+commit.8df45f5f"
@@ -92,6 +92,7 @@
         ":@jbx-protocol/=node_modules/@jbx-protocol/",
         ":@openzeppelin/=node_modules/@openzeppelin/",
         ":@paulrberg/=node_modules/@paulrberg/",
+        ":@prb/=node_modules/@prb/",
         ":@uniswap/=node_modules/@uniswap/",
         ":base64-sol/=node_modules/base64-sol/",
         ":ds-test/=lib/ds-test/src/",
@@ -100,7 +101,7 @@
       ],
       "optimizer": {
         "enabled": true,
-        "runs": 200
+        "runs": 20000000
       },
       "metadata": {
         "bytecodeHash": "ipfs"
@@ -124,19 +125,19 @@
   },
   "ast": {
     "absolutePath": "node_modules/@jbx-protocol/juice-contracts-v3/contracts/libraries/JBCurrencies.sol",
-    "id": 5472,
+    "id": 28847,
     "exportedSymbols": {
       "JBCurrencies": [
-        5471
+        28846
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:120:34",
+    "src": "32:120:46",
     "nodes": [
       {
-        "id": 5464,
+        "id": 28839,
         "nodeType": "PragmaDirective",
-        "src": "32:23:34",
+        "src": "32:23:46",
         "nodes": [],
         "literals": [
           "solidity",
@@ -146,21 +147,21 @@
         ]
       },
       {
-        "id": 5471,
+        "id": 28846,
         "nodeType": "ContractDefinition",
-        "src": "57:94:34",
+        "src": "57:94:46",
         "nodes": [
           {
-            "id": 5467,
+            "id": 28842,
             "nodeType": "VariableDeclaration",
-            "src": "82:31:34",
+            "src": "82:31:46",
             "nodes": [],
             "constant": true,
             "functionSelector": "8322fff2",
             "mutability": "constant",
             "name": "ETH",
-            "nameLocation": "106:3:34",
-            "scope": 5471,
+            "nameLocation": "106:3:46",
+            "scope": 28846,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -168,10 +169,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 5465,
+              "id": 28840,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "82:7:34",
+              "src": "82:7:46",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -179,14 +180,14 @@
             },
             "value": {
               "hexValue": "31",
-              "id": 5466,
+              "id": 28841,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "112:1:34",
+              "src": "112:1:46",
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_1_by_1",
                 "typeString": "int_const 1"
@@ -196,16 +197,16 @@
             "visibility": "public"
           },
           {
-            "id": 5470,
+            "id": 28845,
             "nodeType": "VariableDeclaration",
-            "src": "117:31:34",
+            "src": "117:31:46",
             "nodes": [],
             "constant": true,
             "functionSelector": "1bf6c21b",
             "mutability": "constant",
             "name": "USD",
-            "nameLocation": "141:3:34",
-            "scope": 5471,
+            "nameLocation": "141:3:46",
+            "scope": 28846,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -213,10 +214,10 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 5468,
+              "id": 28843,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
-              "src": "117:7:34",
+              "src": "117:7:46",
               "typeDescriptions": {
                 "typeIdentifier": "t_uint256",
                 "typeString": "uint256"
@@ -224,14 +225,14 @@
             },
             "value": {
               "hexValue": "32",
-              "id": 5469,
+              "id": 28844,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
               "kind": "number",
               "lValueRequested": false,
               "nodeType": "Literal",
-              "src": "147:1:34",
+              "src": "147:1:46",
               "typeDescriptions": {
                 "typeIdentifier": "t_rational_2_by_1",
                 "typeString": "int_const 2"
@@ -248,15 +249,15 @@
         "contractKind": "library",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          5471
+          28846
         ],
         "name": "JBCurrencies",
-        "nameLocation": "65:12:34",
-        "scope": 5472,
+        "nameLocation": "65:12:46",
+        "scope": 28847,
         "usedErrors": []
       }
     ],
     "license": "MIT"
   },
-  "id": 34
+  "id": 46
 }
